@@ -1,0 +1,31 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { BorderScale, DimensionTable, OpacityScale, RadiusScale, ShadowScale } from './TokenDocs';
+
+<Meta title="Foundations/Radius, Borders & Effects" />
+
+# Radius, borders & effects
+
+## Border radius
+
+<RadiusScale />
+
+## Border widths & focus rings
+
+`--border-width-*` for strokes, `--ring-*` for focus-ring thickness (see `--ring` for the colour).
+
+<BorderScale />
+
+## Shadows
+
+Each shadow is exported both as parts (`--shadow-md-1-y`, `--shadow-md-1-blur`…) and as one
+ready-to-use value, e.g. `box-shadow: var(--shadow-md)`.
+
+<ShadowScale />
+
+<DimensionTable id="shadows" />
+
+## Opacity
+
+<OpacityScale />
+
+<DimensionTable id="opacity" set="absolute" />

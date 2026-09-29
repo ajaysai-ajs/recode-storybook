@@ -1,0 +1,295 @@
+{
+  "absolute": {
+    "padding-0": {
+      "$type": "number",
+      "$value": 0,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:29",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-0)"
+        }
+      }
+    },
+    "padding-2": {
+      "$type": "number",
+      "$value": 2,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:30",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-2)"
+        }
+      }
+    },
+    "padding-4": {
+      "$type": "number",
+      "$value": 4,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:31",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-4)"
+        }
+      }
+    },
+    "padding-6": {
+      "$type": "number",
+      "$value": 6,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:32",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-6)"
+        }
+      }
+    },
+    "padding-8": {
+      "$type": "number",
+      "$value": 8,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:33",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-8)"
+        }
+      }
+    },
+    "padding-10": {
+      "$type": "number",
+      "$value": 10,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:34",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-10)"
+        }
+      }
+    },
+    "padding-12": {
+      "$type": "number",
+      "$value": 12,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:35",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-12)"
+        }
+      }
+    },
+    "padding-14": {
+      "$type": "number",
+      "$value": 14,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:36",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-14)"
+        }
+      }
+    },
+    "padding-16": {
+      "$type": "number",
+      "$value": 16,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:37",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-16)"
+        }
+      }
+    },
+    "padding-20": {
+      "$type": "number",
+      "$value": 20,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:38",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-20)"
+        }
+      }
+    },
+    "padding-24": {
+      "$type": "number",
+      "$value": 24,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:39",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-24)"
+        }
+      }
+    },
+    "padding-32": {
+      "$type": "number",
+      "$value": 32,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:40",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-32)"
+        }
+      }
+    },
+    "padding-40": {
+      "$type": "number",
+      "$value": 40,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:41",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-40)"
+        }
+      }
+    },
+    "padding-48": {
+      "$type": "number",
+      "$value": 48,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:42",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-48)"
+        }
+      }
+    }
+  },
+  "semantic": {
+    "none": {
+      "$type": "number",
+      "$value": "{absolute.padding-0}",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:66",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-none)"
+        }
+      }
+    },
+    "2xs": {
+      "$type": "number",
+      "$value": "{absolute.padding-2}",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:67",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-2xs)"
+        }
+      }
+    },
+    "xs": {
+      "$type": "number",
+      "$value": "{absolute.padding-4}",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:68",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-xs)"
+        }
+      }
+    },
+    "sm": {
+      "$type": "number",
+      "$value": "{absolute.padding-8}",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:69",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-sm)"
+        }
+      }
+    },
+    "md": {
+      "$type": "number",
+      "$value": "{absolute.padding-12}",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:70",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-md)"
+        }
+      }
+    },
+    "lg": {
+      "$type": "number",
+      "$value": "{absolute.padding-16}",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:71",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-lg)"
+        }
+      }
+    },
+    "xl": {
+      "$type": "number",
+      "$value": "{absolute.padding-24}",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:72",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-xl)"
+        }
+      }
+    },
+    "2xl": {
+      "$type": "number",
+      "$value": "{absolute.padding-32}",
+      "$extensions": {
+        "com.figma.variableId": "VariableID:6048:73",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--padding-2xl)"
+        }
+      }
+    }
+  },
+  "$extensions": {
+    "com.figma.modeName": "Default"
+  }
+}

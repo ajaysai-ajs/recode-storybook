@@ -1,0 +1,21 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { RawPalettes, SemanticColors } from './TokenDocs';
+
+<Meta title="Foundations/Colors" />
+
+# Colors
+
+## Semantic colors
+
+Use these in components. Each one points at a raw colour, so it changes automatically between
+light and dark.
+
+<SemanticColors />
+
+## Raw palettes
+
+The full scale from the **raw colors** collection. Steps 1–11 map to `-50` … `-950`. Figma has no
+code syntax for step 12, so it is exported as `-12` (for example `--color-neutral-12`). Hover a
+swatch to see its token name and value.
+
+<RawPalettes />

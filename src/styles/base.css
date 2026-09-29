@@ -1,0 +1,130 @@
+/*
+ * Base styles built on the Figma tokens. Hand-written; the tokens themselves live in
+ * src/tokens/css and are regenerated with `npm run tokens`.
+ */
+@import '../tokens/css/index.css';
+
+:root {
+  --font-stack-sans: var(--font-sans), system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-stack-mono: var(--font-mono), ui-monospace, Consolas, monospace;
+  --shadow-focus: 0 0 0 var(--ring-2) var(--ring);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-stack-sans);
+  font-size: var(--paragraph-regular-font-size);
+  line-height: var(--paragraph-regular-line-height);
+  font-weight: var(--paragraph-regular-weight);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Any themed subtree paints its own surface, so a nested data-theme="dark" block is visible. */
+[data-theme] {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+code,
+kbd,
+pre {
+  font-family: var(--font-stack-mono);
+}
+
+/* ---- Typography presets (match the Figma text styles) ---------------------------------- */
+
+.heading-1,
+.heading-2,
+.heading-3,
+.heading-4 {
+  margin: 0;
+  font-family: var(--font-headings), system-ui, sans-serif;
+}
+
+.heading-1 {
+  font-size: var(--heading-1-font-size);
+  line-height: var(--heading-1-line-height);
+  letter-spacing: var(--heading-1-letter-spacing);
+  font-weight: var(--heading-1-weight);
+}
+
+.heading-2 {
+  font-size: var(--heading-2-font-size);
+  line-height: var(--heading-2-line-height);
+  letter-spacing: var(--heading-2-letter-spacing);
+  font-weight: var(--heading-2-weight);
+}
+
+.heading-3 {
+  font-size: var(--heading-3-font-size);
+  line-height: var(--heading-3-line-height);
+  letter-spacing: var(--heading-3-letter-spacing);
+  font-weight: var(--heading-3-weight);
+}
+
+.heading-4 {
+  font-size: var(--heading-4-font-size);
+  line-height: var(--heading-4-line-height);
+  letter-spacing: var(--heading-4-letter-spacing);
+  font-weight: var(--heading-4-weight);
+}
+
+.paragraph,
+.paragraph-small,
+.paragraph-mini {
+  margin: 0;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: var(--paragraph-regular-weight);
+}
+
+.paragraph {
+  font-size: var(--paragraph-regular-font-size);
+  line-height: var(--paragraph-regular-line-height);
+  letter-spacing: var(--paragraph-regular-letter-spacing);
+}
+
+.paragraph-small {
+  font-size: var(--paragraph-small-font-size);
+  line-height: var(--paragraph-small-line-height);
+  letter-spacing: var(--paragraph-small-letter-spacing);
+}
+
+.paragraph-mini {
+  font-size: var(--paragraph-mini-font-size);
+  line-height: var(--paragraph-mini-line-height);
+  letter-spacing: var(--paragraph-mini-letter-spacing);
+}
+
+.paragraph-medium {
+  font-weight: var(--paragraph-medium-weight);
+}
+
+.paragraph-bold {
+  font-weight: var(--paragraph-bold-weight);
+}
+
+.monospaced {
+  margin: 0;
+  font-family: var(--font-stack-mono);
+  font-size: var(--monospaced-font-size);
+  line-height: var(--monospaced-line-height);
+  letter-spacing: var(--monospaced-letter-spacing);
+  font-weight: var(--monospaced-weight);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}

@@ -1,0 +1,55 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Introduction" />
+
+# Design tokens
+
+These tokens are generated from the Figma Variables export in `/Figma`. They are plain CSS custom
+properties, so they work in any component and any framework.
+
+## Using them
+
+```css
+@import './styles/base.css'; /* tokens + base element styles + typography classes */
+/* or only the variables: */
+@import './tokens/css/index.css';
+
+.my-card {
+  background: var(--card);
+  color: var(--card-foreground);
+  border: var(--border-width-1) solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--padding-lg);
+  box-shadow: var(--shadow-sm);
+}
+```
+
+Variable names are the **code syntax** set on each Figma variable, so the name you see in Figma
+Dev Mode is the name you write in CSS. Click any token name in these pages to copy it.
+
+## Layers
+
+| Layer | Figma collection | File | Use it for |
+| --- | --- | --- | --- |
+| Foundations | raw colors, spacing, sizing, padding, gap, border radii, border, opacity, shadows, typography | `src/tokens/css/foundations/*.css` | Scales. Prefer the semantic names (`--spacing-md`, `--radius-lg`) over the raw steps. |
+| Semantic | semantic | `src/tokens/css/semantic/colors.css` | Colours in components: `--primary`, `--border`, `--muted-foreground`… |
+| Components | components | `src/tokens/css/components/<name>.css` | Building a specific component: `--button-primary-bg`, `--input-border`… |
+
+Semantic and component tokens point at foundations with `var()`, so changing a raw colour or
+switching theme updates everything that references it.
+
+## Light & dark
+
+Raw colours have a **Light** and **Dark** mode. Use the **Theme** button in the Storybook toolbar,
+or set the attribute yourself. It also works on any element, not just `<html>`:
+
+```html
+<html data-theme="dark">…</html>
+<section data-theme="dark">This part of the page is dark</section>
+```
+
+## Updating from Figma
+
+1. Export variables from Figma and replace the files in `/Figma` (keep one folder per collection).
+2. Run `npm run tokens` (Storybook also runs it automatically on start and build).
+3. Check the warnings printed by the script. They point at naming problems to fix in Figma.

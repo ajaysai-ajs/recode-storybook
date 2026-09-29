@@ -1,0 +1,9 @@
+/* Icon styles. Uses the component tokens --icon-size and --icon-fg only. */
+
+.rds-icon {
+  flex: none;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  color: var(--icon-fg);
+  fill: currentColor; /* the path takes the icon's colour */
+}

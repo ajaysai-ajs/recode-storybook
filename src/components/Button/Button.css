@@ -1,0 +1,182 @@
+﻿/*
+ * Button styles. Uses only component tokens (--button-*, --spinner-*, --loading-button-*)
+ * and semantic tokens - no hex values, no raw scales.
+ *
+ * How it works: each variant and size below fills in a few local variables (they start with
+ * "--_" to show they are private to this file). The shared rules further down only read them.
+ */
+
+.rds-button {
+  /* Base: laid out like the Figma auto-layout frame (horizontal, centred, hug contents) */
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--_gap);
+  height: var(--_height);
+  padding-inline: var(--_padding-x);
+  border: var(--button-border-width) solid var(--_border);
+  border-radius: var(--_radius);
+  background: var(--_bg);
+  color: var(--_fg);
+
+  font-family: inherit;
+  font-size: var(--_font-size);
+  line-height: var(--_line-height);
+  font-weight: var(--button-font-weight);
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* ---- Sizes (Figma: Size) --------------------------------------------------------------- */
+
+.rds-button[data-size='sm'] {
+  --_height: var(--button-size-sm-height);
+  --_padding-x: var(--button-size-sm-padding-x);
+  --_gap: var(--button-size-sm-gap);
+  --_font-size: var(--button-size-sm-font-size);
+  --_line-height: var(--button-size-sm-line-height);
+  --_icon-size: var(--button-size-sm-icon);
+  --_radius: var(--button-size-sm-radius);
+}
+
+.rds-button[data-size='md'] {
+  --_height: var(--button-size-md-height);
+  --_padding-x: var(--button-size-md-padding-x);
+  --_gap: var(--button-size-md-gap);
+  --_font-size: var(--button-size-md-font-size);
+  --_line-height: var(--button-size-md-line-height);
+  --_icon-size: var(--button-size-md-icon);
+  --_radius: var(--button-size-md-radius);
+}
+
+.rds-button[data-size='lg'] {
+  --_height: var(--button-size-lg-height);
+  --_padding-x: var(--button-size-lg-padding-x);
+  --_gap: var(--button-size-lg-gap);
+  --_font-size: var(--button-size-lg-font-size);
+  --_line-height: var(--button-size-lg-line-height);
+  --_icon-size: var(--button-size-lg-icon);
+  --_radius: var(--button-size-lg-radius);
+}
+
+/* ---- Variants (Figma: Variant) ---------------------------------------------------------- */
+
+.rds-button[data-variant='Primary'] {
+  --_bg: var(--button-primary-bg);
+  --_bg-hover: var(--button-primary-bg-hover);
+  --_bg-active: var(--button-primary-bg-active);
+  --_fg: var(--button-primary-fg);
+  --_fg-hover: var(--button-primary-fg);
+  --_border: var(--button-primary-border);
+  --_ring: var(--button-focus-ring);
+}
+
+.rds-button[data-variant='Secondary'] {
+  --_bg: var(--button-secondary-bg);
+  --_bg-hover: var(--button-secondary-bg-hover);
+  --_bg-active: var(--button-secondary-bg-active);
+  --_fg: var(--button-secondary-fg);
+  --_fg-hover: var(--button-secondary-fg);
+  --_border: var(--button-secondary-border);
+  --_ring: var(--button-focus-ring);
+}
+
+.rds-button[data-variant='Destructive'] {
+  --_bg: var(--button-destructive-bg);
+  --_bg-hover: var(--button-destructive-bg-hover);
+  --_bg-active: var(--button-destructive-bg-active);
+  --_fg: var(--button-destructive-fg);
+  --_fg-hover: var(--button-destructive-fg);
+  --_border: var(--button-destructive-border);
+  --_ring: var(--button-focus-ring-destructive);
+}
+
+.rds-button[data-variant='Outline'] {
+  --_bg: var(--button-outline-bg);
+  --_bg-hover: var(--button-outline-bg-hover);
+  --_bg-active: var(--button-outline-bg-active);
+  --_fg: var(--button-outline-fg);
+  --_fg-hover: var(--button-outline-fg);
+  --_border: var(--button-outline-border);
+  --_ring: var(--button-focus-ring);
+}
+
+.rds-button[data-variant='Ghost'] {
+  --_bg: var(--button-ghost-bg);
+  --_bg-hover: var(--button-ghost-bg-hover);
+  --_bg-active: var(--button-ghost-bg-active);
+  --_fg: var(--button-ghost-fg);
+  --_fg-hover: var(--button-ghost-fg);
+  --_border: var(--button-ghost-border);
+  --_ring: var(--button-focus-ring);
+}
+
+/* Link is the only variant whose text colour changes on hover */
+.rds-button[data-variant='Link'] {
+  --_bg: var(--button-link-bg);
+  --_bg-hover: var(--button-link-bg-hover);
+  --_bg-active: var(--button-link-bg-active);
+  --_fg: var(--button-link-fg);
+  --_fg-hover: var(--button-link-fg-hover);
+  --_border: var(--button-link-border);
+  --_ring: var(--button-focus-ring);
+}
+
+/* ---- States (Figma: State) -------------------------------------------------------------- */
+/* Each state matches both the real browser state (e.g. :hover) and the forced preview
+   (data-state="Hover") that Storybook uses to show it. Disabled and loading buttons ignore
+   hover and press, just like in Figma. */
+
+.rds-button:is(:hover, [data-state='Hover']):not(:disabled, [aria-busy='true']) {
+  background: var(--_bg-hover);
+  color: var(--_fg-hover);
+}
+
+.rds-button:is(:active, [data-state='Press']):not(:disabled, [aria-busy='true']) {
+  background: var(--_bg-active);
+}
+
+/* Focus: a ring outside the button, so it never changes the button's size.
+   `outline` follows the button's rounded corners automatically. */
+.rds-button:is(:focus-visible, [data-state='Focus']) {
+  outline: var(--ring-2) solid var(--_ring);
+  outline-offset: var(--button-focus-ring-offset);
+  box-shadow: none; /* replaces the generic focus style from base.css */
+}
+
+.rds-button:disabled {
+  --_bg: var(--button-disabled-bg);
+  --_fg: var(--button-disabled-fg);
+  --_border: var(--button-disabled-border);
+  cursor: not-allowed;
+}
+
+.rds-button[aria-busy='true'] {
+  cursor: progress;
+}
+
+/* ---- Parts ------------------------------------------------------------------------------ */
+
+.rds-button__icon {
+  display: inline-flex;
+  flex: none;
+  width: var(--_icon-size);
+  height: var(--_icon-size);
+}
+
+.rds-button__icon > svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* While loading, hide the label visually but keep it for screen readers.
+   clip-path shrinks the visible area to nothing; position: absolute takes it out of the
+   layout so the button narrows to just the spinner, as in Figma. */
+.rds-button[aria-busy='true'] .rds-button__label {
+  position: absolute;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

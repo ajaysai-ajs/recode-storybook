@@ -1,0 +1,344 @@
+/* Styles for the Foundations docs blocks (src/docs/TokenDocs.tsx). */
+
+.tk {
+  font-family: var(--font-stack-sans);
+  font-size: var(--paragraph-small-font-size);
+  line-height: var(--paragraph-small-line-height);
+  color: var(--foreground);
+  background: transparent;
+  margin-block: var(--spacing-md);
+}
+
+.tk-meta {
+  display: block;
+  color: var(--muted-foreground);
+  font-size: var(--paragraph-mini-font-size);
+  line-height: var(--paragraph-mini-line-height);
+}
+
+.tk-code {
+  font-family: var(--font-stack-mono);
+  font-size: var(--paragraph-mini-font-size);
+  color: var(--muted-foreground);
+  background: var(--muted);
+  padding: 1px var(--padding-xs);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+.tk-name {
+  all: unset;
+  cursor: pointer;
+  font-family: var(--font-stack-mono);
+  font-size: var(--paragraph-mini-font-size);
+  font-weight: var(--font-weight-medium);
+  color: var(--primary-subtle-foreground);
+  border-radius: var(--radius-xs);
+  word-break: break-all;
+}
+
+.tk-name:hover {
+  text-decoration: underline;
+}
+
+.tk-name:focus-visible {
+  box-shadow: var(--shadow-focus);
+}
+
+.tk-value {
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Swatches: checkerboard shows through translucent colours */
+.tk-swatch {
+  --tk-check: var(--color-neutral-300);
+  display: inline-block;
+  flex: none;
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.08);
+  background:
+    linear-gradient(var(--tk-swatch), var(--tk-swatch)),
+    repeating-conic-gradient(var(--tk-check) 0 25%, transparent 0 50%) 0 0 / 10px 10px;
+}
+
+.tk-swatch--md {
+  width: var(--size-40);
+  height: var(--size-40);
+}
+
+.tk-swatch--sm {
+  width: var(--size-20);
+  height: var(--size-20);
+  border-radius: var(--radius-sm);
+}
+
+/* Raw palettes */
+.tk-palette {
+  margin-block-end: var(--spacing-lg);
+}
+
+.tk-palette__title,
+.tk-section__title {
+  margin: 0 0 var(--spacing-xs);
+  font-size: var(--paragraph-small-font-size);
+  font-weight: var(--font-weight-semibold);
+  text-transform: capitalize;
+}
+
+.tk-palette__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--gap-xs);
+  margin-block-end: var(--gap-xs);
+}
+
+.tk-palette__mode {
+  width: var(--size-40);
+  padding-block-start: var(--padding-sm);
+  color: var(--muted-foreground);
+  font-size: var(--paragraph-mini-font-size);
+}
+
+.tk-palette__cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-2xs);
+}
+
+.tk-palette__step {
+  color: var(--muted-foreground);
+  font-size: 10px;
+}
+
+/* Tables */
+.tk-section {
+  margin-block-end: var(--spacing-xl);
+}
+
+.tk-table-wrap {
+  overflow-x: auto;
+  border: var(--border-width-1) solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.tk-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tk-table th {
+  text-align: left;
+  font-weight: var(--font-weight-medium);
+  color: var(--muted-foreground);
+  font-size: var(--paragraph-mini-font-size);
+  background: var(--surface-sunken);
+  padding: var(--padding-sm) var(--padding-md);
+  border-bottom: var(--border-width-1) solid var(--border);
+}
+
+.tk-table td {
+  padding: var(--padding-sm) var(--padding-md);
+  border-bottom: var(--border-width-1) solid var(--border-subtle);
+  vertical-align: middle;
+}
+
+.tk-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.tk-table__swatch {
+  white-space: nowrap;
+}
+
+.tk-table__swatch > * {
+  display: inline-block;
+  vertical-align: middle;
+  margin-inline-end: var(--gap-sm);
+}
+
+/* Lists with bars */
+.tk-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.tk-list__row {
+  display: grid;
+  grid-template-columns: minmax(10rem, 14rem) 1fr;
+  align-items: center;
+  gap: var(--gap-lg);
+}
+
+.tk-list__label {
+  min-width: 0;
+}
+
+.tk-bar {
+  display: block;
+  height: var(--size-16);
+  min-width: 2px;
+  background: var(--chart-1);
+  border-radius: var(--radius-xs);
+}
+
+.tk-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Card grids */
+.tk-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: var(--gap-lg);
+}
+
+.tk-grid--roomy {
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: var(--gap-2xl);
+}
+
+.tk-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  padding: var(--padding-md);
+  border: var(--border-width-1) solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+}
+
+.tk-card--flat {
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.tk-card__sample {
+  line-height: 1.2;
+  padding-block-end: var(--padding-xs);
+}
+
+.tk-radius,
+.tk-border {
+  width: var(--size-64);
+  height: var(--size-64);
+  background: var(--primary-subtle);
+  margin-block-end: var(--gap-xs);
+}
+
+.tk-radius {
+  border: var(--border-width-2) solid var(--primary);
+}
+
+.tk-border {
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.tk-shadow {
+  height: var(--size-80);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  margin-block-end: var(--gap-md);
+}
+
+.tk-opacity {
+  height: var(--size-48);
+  border-radius: var(--radius-md);
+  background: repeating-conic-gradient(var(--color-neutral-300) 0 25%, transparent 0 50%) 0 0 / 12px 12px;
+  overflow: hidden;
+}
+
+.tk-opacity > span {
+  display: block;
+  height: 100%;
+  background: var(--primary);
+}
+
+/* Typography */
+.tk-type {
+  display: flex;
+  flex-direction: column;
+}
+
+.tk-type__row {
+  display: grid;
+  grid-template-columns: minmax(10rem, 13rem) 1fr;
+  gap: var(--gap-xl);
+  align-items: baseline;
+  padding-block: var(--padding-lg);
+  border-bottom: var(--border-width-1) solid var(--border-subtle);
+}
+
+.tk-type__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-2xs);
+  align-items: flex-start;
+}
+
+@media (max-width: 640px) {
+  .tk-type__row,
+  .tk-list__row {
+    grid-template-columns: 1fr;
+    gap: var(--gap-xs);
+  }
+}
+
+/* Component explorer */
+.tk-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-md);
+  margin-block-end: var(--spacing-md);
+}
+
+.tk-input {
+  height: var(--size-control-md);
+  padding-inline: var(--padding-md);
+  font: inherit;
+  color: var(--input-foreground);
+  background: var(--input-background);
+  border: var(--border-width-1) solid var(--input);
+  border-radius: var(--radius-md);
+}
+
+.tk-input[type='search'] {
+  flex: 1 1 16rem;
+}
+
+.tk-input:hover {
+  border-color: var(--input-hover);
+}
+
+.tk-details {
+  margin-block-end: var(--spacing-xs);
+}
+
+.tk-details > summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-md);
+  cursor: pointer;
+  padding: var(--padding-sm) var(--padding-md);
+  border-radius: var(--radius-md);
+}
+
+.tk-details > summary > strong {
+  text-transform: capitalize;
+}
+
+.tk-details > summary:hover {
+  background: var(--state-hover);
+}
+
+.tk-details[open] > summary {
+  margin-block-end: var(--spacing-xs);
+}

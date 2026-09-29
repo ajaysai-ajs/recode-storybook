@@ -1,0 +1,61 @@
+/* Spinner styles. Uses only the --spinner-* component tokens. */
+
+.rds-spinner {
+  flex: none;
+  width: var(--_size);
+  height: var(--_size);
+  fill: none;
+  animation: rds-spinner-spin var(--_spin-duration) linear infinite;
+
+  /* Figma has no motion tokens yet, so the speed is set here. */
+  --_spin-duration: 1s;
+}
+
+.rds-spinner circle {
+  stroke-width: var(--spinner-stroke-width);
+  vector-effect: non-scaling-stroke; /* keeps the ring 2px thick at every size */
+}
+
+.rds-spinner__track {
+  stroke: var(--_track);
+}
+
+.rds-spinner__indicator {
+  stroke: var(--_indicator);
+}
+
+/* ---- Sizes (Figma: Size) ---- */
+
+.rds-spinner[data-size='sm'] { --_size: var(--spinner-size-sm); }
+.rds-spinner[data-size='md'] { --_size: var(--spinner-size-md); }
+.rds-spinner[data-size='lg'] { --_size: var(--spinner-size-lg); }
+
+/* ---- Tones (Figma: Tone) ---- */
+
+.rds-spinner[data-tone='Brand'] {
+  --_track: var(--spinner-track);
+  --_indicator: var(--spinner-indicator);
+}
+
+.rds-spinner[data-tone='Neutral'] {
+  --_track: var(--spinner-track);
+  --_indicator: var(--spinner-indicator-neutral);
+}
+
+.rds-spinner[data-tone='On brand'] {
+  --_track: var(--spinner-track-on-brand);
+  --_indicator: var(--spinner-indicator-on-brand);
+}
+
+@keyframes rds-spinner-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* People who ask their device for less motion get a slower, calmer spinner. */
+@media (prefers-reduced-motion: reduce) {
+  .rds-spinner {
+    --_spin-duration: 3s;
+  }
+}
