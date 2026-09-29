@@ -1,0 +1,160 @@
+/*
+ * Badge styles. Uses only --badge-* component tokens and semantic tokens.
+ * Each spacing and appearance fills in local "--_" variables; the base rule reads them.
+ */
+
+.rds-badge {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_gap);
+  height: var(--_height);
+  padding: var(--_padding-y) var(--_padding-x);
+  border: var(--badge-border-width) solid var(--_border);
+  border-radius: var(--_radius);
+  background: var(--_bg);
+  color: var(--_fg);
+  font-family: inherit;
+  font-size: var(--_font-size);
+  line-height: var(--_line-height);
+  font-weight: var(--paragraph-medium-weight); /* Figma: Inter Medium */
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* ---- Spacing (Figma: spacing) ---- */
+
+.rds-badge[data-spacing='default'] {
+  --_height: var(--badge-default-height);
+  --_padding-x: var(--badge-default-padding-x);
+  --_padding-y: var(--badge-default-padding-y);
+  --_gap: var(--badge-default-gap);
+  --_radius: var(--badge-default-radius);
+  --_font-size: var(--badge-default-font-size);
+  --_line-height: var(--badge-default-line-height);
+  --_icon-size: var(--badge-default-icon-size);
+}
+
+.rds-badge[data-spacing='spacious'] {
+  --_height: var(--badge-spacious-height);
+  --_padding-x: var(--badge-spacious-padding-x);
+  --_padding-y: var(--badge-spacious-padding-y);
+  --_gap: var(--badge-spacious-gap);
+  --_radius: var(--badge-spacious-radius);
+  --_font-size: var(--badge-spacious-font-size);
+  --_line-height: var(--badge-spacious-line-height);
+  --_icon-size: var(--badge-spacious-icon-size);
+}
+
+/* ---- Appearances (Figma: appearance) ---- */
+/* Status appearances */
+
+.rds-badge[data-appearance='neutral'] {
+  --_bg: var(--badge-neutral-bg);
+  --_fg: var(--badge-neutral-fg);
+  --_border: var(--badge-neutral-border);
+}
+
+.rds-badge[data-appearance='danger'] {
+  --_bg: var(--badge-danger-bg);
+  --_fg: var(--badge-danger-fg);
+  --_border: var(--badge-danger-border);
+}
+
+.rds-badge[data-appearance='warning'] {
+  --_bg: var(--badge-warning-bg);
+  --_fg: var(--badge-warning-fg);
+  --_border: var(--badge-warning-border);
+}
+
+.rds-badge[data-appearance='success'] {
+  --_bg: var(--badge-success-bg);
+  --_fg: var(--badge-success-fg);
+  --_border: var(--badge-success-border);
+}
+
+.rds-badge[data-appearance='information'] {
+  --_bg: var(--badge-information-bg);
+  --_fg: var(--badge-information-fg);
+  --_border: var(--badge-information-border);
+}
+
+.rds-badge[data-appearance='discovery'] {
+  --_bg: var(--badge-discovery-bg);
+  --_fg: var(--badge-discovery-fg);
+  --_border: var(--badge-discovery-border);
+}
+
+/* Accent appearances (categories, no status meaning) */
+
+.rds-badge[data-appearance='accent-gray'] {
+  --_bg: var(--badge-accent-gray-bg);
+  --_fg: var(--badge-accent-gray-fg);
+  --_border: var(--badge-accent-gray-border);
+}
+
+.rds-badge[data-appearance='accent-red'] {
+  --_bg: var(--badge-accent-red-bg);
+  --_fg: var(--badge-accent-red-fg);
+  --_border: var(--badge-accent-red-border);
+}
+
+.rds-badge[data-appearance='accent-orange'] {
+  --_bg: var(--badge-accent-orange-bg);
+  --_fg: var(--badge-accent-orange-fg);
+  --_border: var(--badge-accent-orange-border);
+}
+
+.rds-badge[data-appearance='accent-yellow'] {
+  --_bg: var(--badge-accent-yellow-bg);
+  --_fg: var(--badge-accent-yellow-fg);
+  --_border: var(--badge-accent-yellow-border);
+}
+
+.rds-badge[data-appearance='accent-lime'] {
+  --_bg: var(--badge-accent-lime-bg);
+  --_fg: var(--badge-accent-lime-fg);
+  --_border: var(--badge-accent-lime-border);
+}
+
+.rds-badge[data-appearance='accent-green'] {
+  --_bg: var(--badge-accent-green-bg);
+  --_fg: var(--badge-accent-green-fg);
+  --_border: var(--badge-accent-green-border);
+}
+
+.rds-badge[data-appearance='accent-teal'] {
+  --_bg: var(--badge-accent-teal-bg);
+  --_fg: var(--badge-accent-teal-fg);
+  --_border: var(--badge-accent-teal-border);
+}
+
+.rds-badge[data-appearance='accent-blue'] {
+  --_bg: var(--badge-accent-blue-bg);
+  --_fg: var(--badge-accent-blue-fg);
+  --_border: var(--badge-accent-blue-border);
+}
+
+.rds-badge[data-appearance='accent-purple'] {
+  --_bg: var(--badge-accent-purple-bg);
+  --_fg: var(--badge-accent-purple-fg);
+  --_border: var(--badge-accent-purple-border);
+}
+
+.rds-badge[data-appearance='accent-magenta'] {
+  --_bg: var(--badge-accent-magenta-bg);
+  --_fg: var(--badge-accent-magenta-fg);
+  --_border: var(--badge-accent-magenta-border);
+}
+
+/* ---- Parts ---- */
+
+/* The icon slot sets the size and colour any Icon inside it will use. */
+.rds-badge__icon {
+  display: inline-flex;
+  flex: none;
+  width: var(--_icon-size);
+  height: var(--_icon-size);
+  --icon-size: var(--_icon-size);
+  --icon-fg: currentColor;
+}

@@ -1,0 +1,139 @@
+/*
+ * Checkbox styles. Uses only --checkbox-* component tokens and semantic tokens.
+ * The native checkbox is restyled with `appearance: none`; the tick and dash are drawn with
+ * a mask (the shape) filled with a token colour, so they follow the theme.
+ */
+
+.rds-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--checkbox-gap);
+  cursor: pointer;
+}
+
+/* The 24px frame around the 16px box, as in Figma - a bigger area to click or tap. */
+.rds-checkbox__target {
+  display: inline-flex;
+  flex: none;
+  padding: var(--padding-xs);
+}
+
+.rds-checkbox__control {
+  position: relative;
+  box-sizing: border-box;
+  flex: none;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  margin: 0;
+  appearance: none; /* removes the browser's own checkbox drawing */
+  border: var(--checkbox-border-width) solid var(--_border);
+  border-radius: var(--checkbox-radius);
+  background: var(--_bg);
+  cursor: inherit;
+
+  /* Unchecked colours */
+  --_bg: var(--checkbox-bg);
+  --_bg-hover: var(--checkbox-bg-hover);
+  --_bg-press: var(--checkbox-bg-press);
+  --_border: var(--checkbox-border);
+  --_border-hover: var(--checkbox-border-hover);
+  --_ring: var(--checkbox-ring);
+}
+
+/* The tick or dash. Its shape comes from the Figma geometry (Material check and remove). */
+.rds-checkbox__control::before {
+  content: '';
+  position: absolute;
+  inset: calc(var(--checkbox-border-width) * -1); /* cover the full box, border included */
+  background: var(--_mark, transparent);
+  mask: var(--_mark-shape) center / 100% 100% no-repeat;
+}
+
+/* ---- Checked and indeterminate (Figma: isChecked, isIndeterminate) ------------------------ */
+
+.rds-checkbox__control:checked,
+.rds-checkbox__control:indeterminate {
+  --_bg: var(--checkbox-bg-checked);
+  --_bg-hover: var(--checkbox-bg-checked-hover);
+  --_bg-press: var(--checkbox-bg-checked-press);
+  --_border: var(--checkbox-border-checked);
+  --_border-hover: var(--checkbox-border-checked);
+  --_mark: var(--checkbox-mark);
+}
+
+.rds-checkbox__control:checked {
+  --_mark-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5.99574 10.4233L3.388 7.81552L2.5 8.69727L5.99574 12.193L13.5 4.68874L12.6182 3.80699L5.99574 10.4233Z'/%3E%3C/svg%3E");
+}
+
+/* Indeterminate wins over checked, as in Figma */
+.rds-checkbox__control:indeterminate {
+  --_mark-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M12.5 9H3.5V7H12.5V9Z'/%3E%3C/svg%3E");
+}
+
+/* ---- Interaction (Figma: state) ------------------------------------------------------------ */
+/* Hovering or pressing anywhere on the row (box or label) affects the box. */
+
+:is(.rds-checkbox:hover, .rds-checkbox[data-state='hover']) .rds-checkbox__control:not(:disabled) {
+  background: var(--_bg-hover);
+  border-color: var(--_border-hover);
+}
+
+/* On press the border goes back to its resting colour, as in Figma */
+:is(.rds-checkbox:active, .rds-checkbox[data-state='press']) .rds-checkbox__control:not(:disabled) {
+  background: var(--_bg-press);
+  border-color: var(--_border);
+}
+
+/* Focus ring 1px outside the box. Only shown for keyboard focus, not mouse clicks. */
+.rds-checkbox__control:focus-visible,
+.rds-checkbox[data-state='focus'] .rds-checkbox__control {
+  outline: var(--checkbox-ring-width) solid var(--_ring);
+  outline-offset: var(--checkbox-border-width);
+}
+
+/* ---- Invalid (Figma: isInvalid) -------------------------------------------------------------- */
+/* Red border in every state; the fill still shows checked/hover/press as normal. */
+
+.rds-checkbox__control[aria-invalid='true'] {
+  --_border: var(--checkbox-border-error);
+  --_border-hover: var(--checkbox-border-error);
+  --_ring: var(--checkbox-ring-error);
+}
+
+/* ---- Disabled (Figma: isDisabled) ------------------------------------------------------------ */
+
+.rds-checkbox:has(.rds-checkbox__control:disabled) {
+  cursor: not-allowed;
+}
+
+.rds-checkbox__control:disabled {
+  --_bg: var(--checkbox-bg-disabled);
+  --_border: var(--checkbox-border-disabled);
+}
+
+/* Only a ticked/dashed box has a mark to grey out (an empty one has no mark at all) */
+.rds-checkbox__control:disabled:is(:checked, :indeterminate) {
+  --_mark: var(--checkbox-mark-disabled);
+}
+
+/* ---- Label ------------------------------------------------------------------------------------ */
+/* Figma: the "paragraph small / regular" text style */
+
+.rds-checkbox__label {
+  display: inline-flex;
+  gap: var(--gap-2xs);
+  color: var(--checkbox-label);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: var(--paragraph-small-font-size);
+  line-height: var(--paragraph-small-line-height);
+  letter-spacing: var(--paragraph-small-letter-spacing);
+  font-weight: var(--paragraph-regular-weight);
+}
+
+.rds-checkbox:has(.rds-checkbox__control:disabled) .rds-checkbox__label {
+  color: var(--checkbox-label-disabled);
+}
+
+.rds-checkbox__required {
+  color: var(--checkbox-required);
+}

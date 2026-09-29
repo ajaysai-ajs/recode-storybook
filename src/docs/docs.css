@@ -41,10 +41,6 @@
   text-decoration: underline;
 }
 
-.tk-name:focus-visible {
-  box-shadow: var(--shadow-focus);
-}
-
 .tk-value {
   font-weight: var(--font-weight-semibold);
 }

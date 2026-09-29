@@ -1,0 +1,264 @@
+﻿/*
+ * Tag styles. Uses only --tag-* component tokens and semantic tokens.
+ * Each colour fills in local "--_" variables; the shared rules read them.
+ */
+
+.rds-tag {
+  position: relative; /* the remove button sits in the right-hand padding */
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tag-gap);
+  height: var(--tag-height);
+  padding-inline: var(--tag-padding-left) var(--tag-padding-right);
+  border: var(--tag-border-width) solid var(--_border);
+  border-radius: var(--_radius);
+  background: var(--_bg);
+  color: var(--_fg);
+  font-family: inherit;
+  font-size: var(--tag-font-size);
+  line-height: normal; /* Figma: "auto" line height, not a token */
+  font-weight: var(--paragraph-medium-weight); /* Figma: Inter Medium */
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* ---- Appearance (Figma: appearance) ---- */
+
+.rds-tag[data-appearance='default'] { --_radius: var(--tag-radius-default); }
+.rds-tag[data-appearance='rounded'] { --_radius: var(--tag-radius-rounded); }
+
+/* ---- States (Figma: state) ---- */
+
+.rds-tag:is(:hover, [data-state='Hover']) {
+  background: var(--_bg-hover);
+}
+
+.rds-tag:is(:active, [data-state='Press']) {
+  background: var(--_bg-press);
+}
+
+/* Figma draws this ring with a raw blue; code uses the shared semantic focus colour. */
+.rds-tag[data-state='Focus'] {
+  outline: var(--ring-2) solid var(--ring);
+  outline-offset: var(--ring-1);
+}
+
+/* ---- Parts ---- */
+
+.rds-tag__before {
+  display: inline-flex;
+  flex: none;
+  width: var(--tag-icon-size);
+  height: var(--tag-icon-size);
+  --icon-size: var(--tag-icon-size);
+  --icon-fg: currentColor;
+}
+
+/* The remove button fills the right-hand padding, inside the border (as in Figma). */
+.rds-tag__remove {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  display: inline-flex;
+  width: var(--tag-icon-size);
+  height: var(--tag-icon-size);
+  padding: 0;
+  border: 0;
+  border-radius: var(--tag-radius-rounded);
+  background: transparent;
+  color: inherit; /* follows the tag text, so it stays visible on solid colours */
+  cursor: pointer;
+}
+
+.rds-tag__remove svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5; /* Figma stroke; no token for icon stroke weight */
+  stroke-linecap: round;
+}
+
+.rds-tag__remove:hover {
+  background: var(--tag-remove-bg-hover);
+}
+
+.rds-tag__remove:active {
+  background: var(--tag-remove-bg-press);
+}
+
+.rds-tag__remove:focus-visible {
+  outline: var(--ring-2) solid var(--ring);
+  outline-offset: var(--ring-2);
+}
+
+/* ---- Colours (Figma: color) ---- */
+
+.rds-tag[data-color='standard'] {
+  --_bg: var(--tag-standard-bg);
+  --_bg-hover: var(--tag-standard-bg-hover);
+  --_bg-press: var(--tag-standard-bg-press);
+  --_fg: var(--tag-standard-fg);
+  --_border: var(--tag-standard-border);
+}
+
+.rds-tag[data-color='grey'] {
+  --_bg: var(--tag-grey-bg);
+  --_bg-hover: var(--tag-grey-bg-hover);
+  --_bg-press: var(--tag-grey-bg-press);
+  --_fg: var(--tag-grey-fg);
+  --_border: var(--tag-grey-border);
+}
+
+.rds-tag[data-color='grey subtle'] {
+  --_bg: var(--tag-grey-subtle-bg);
+  --_bg-hover: var(--tag-grey-subtle-bg-hover);
+  --_bg-press: var(--tag-grey-subtle-bg-press);
+  --_fg: var(--tag-grey-subtle-fg);
+  --_border: var(--tag-grey-subtle-border);
+}
+
+.rds-tag[data-color='blue'] {
+  --_bg: var(--tag-blue-bg);
+  --_bg-hover: var(--tag-blue-bg-hover);
+  --_bg-press: var(--tag-blue-bg-press);
+  --_fg: var(--tag-blue-fg);
+  --_border: var(--tag-blue-border);
+}
+
+.rds-tag[data-color='blue subtle'] {
+  --_bg: var(--tag-blue-subtle-bg);
+  --_bg-hover: var(--tag-blue-subtle-bg-hover);
+  --_bg-press: var(--tag-blue-subtle-bg-press);
+  --_fg: var(--tag-blue-subtle-fg);
+  --_border: var(--tag-blue-subtle-border);
+}
+
+.rds-tag[data-color='red'] {
+  --_bg: var(--tag-red-bg);
+  --_bg-hover: var(--tag-red-bg-hover);
+  --_bg-press: var(--tag-red-bg-press);
+  --_fg: var(--tag-red-fg);
+  --_border: var(--tag-red-border);
+}
+
+.rds-tag[data-color='red subtle'] {
+  --_bg: var(--tag-red-subtle-bg);
+  --_bg-hover: var(--tag-red-subtle-bg-hover);
+  --_bg-press: var(--tag-red-subtle-bg-press);
+  --_fg: var(--tag-red-subtle-fg);
+  --_border: var(--tag-red-subtle-border);
+}
+
+.rds-tag[data-color='yellow'] {
+  --_bg: var(--tag-yellow-bg);
+  --_bg-hover: var(--tag-yellow-bg-hover);
+  --_bg-press: var(--tag-yellow-bg-press);
+  --_fg: var(--tag-yellow-fg);
+  --_border: var(--tag-yellow-border);
+}
+
+.rds-tag[data-color='yellow subtle'] {
+  --_bg: var(--tag-yellow-subtle-bg);
+  --_bg-hover: var(--tag-yellow-subtle-bg-hover);
+  --_bg-press: var(--tag-yellow-subtle-bg-press);
+  --_fg: var(--tag-yellow-subtle-fg);
+  --_border: var(--tag-yellow-subtle-border);
+}
+
+.rds-tag[data-color='green'] {
+  --_bg: var(--tag-green-bg);
+  --_bg-hover: var(--tag-green-bg-hover);
+  --_bg-press: var(--tag-green-bg-press);
+  --_fg: var(--tag-green-fg);
+  --_border: var(--tag-green-border);
+}
+
+.rds-tag[data-color='green subtle'] {
+  --_bg: var(--tag-green-subtle-bg);
+  --_bg-hover: var(--tag-green-subtle-bg-hover);
+  --_bg-press: var(--tag-green-subtle-bg-press);
+  --_fg: var(--tag-green-subtle-fg);
+  --_border: var(--tag-green-subtle-border);
+}
+
+.rds-tag[data-color='teal'] {
+  --_bg: var(--tag-teal-bg);
+  --_bg-hover: var(--tag-teal-bg-hover);
+  --_bg-press: var(--tag-teal-bg-press);
+  --_fg: var(--tag-teal-fg);
+  --_border: var(--tag-teal-border);
+}
+
+.rds-tag[data-color='teal subtle'] {
+  --_bg: var(--tag-teal-subtle-bg);
+  --_bg-hover: var(--tag-teal-subtle-bg-hover);
+  --_bg-press: var(--tag-teal-subtle-bg-press);
+  --_fg: var(--tag-teal-subtle-fg);
+  --_border: var(--tag-teal-subtle-border);
+}
+
+.rds-tag[data-color='purple'] {
+  --_bg: var(--tag-purple-bg);
+  --_bg-hover: var(--tag-purple-bg-hover);
+  --_bg-press: var(--tag-purple-bg-press);
+  --_fg: var(--tag-purple-fg);
+  --_border: var(--tag-purple-border);
+}
+
+.rds-tag[data-color='purple subtle'] {
+  --_bg: var(--tag-purple-subtle-bg);
+  --_bg-hover: var(--tag-purple-subtle-bg-hover);
+  --_bg-press: var(--tag-purple-subtle-bg-press);
+  --_fg: var(--tag-purple-subtle-fg);
+  --_border: var(--tag-purple-subtle-border);
+}
+
+.rds-tag[data-color='magenta'] {
+  --_bg: var(--tag-magenta-bg);
+  --_bg-hover: var(--tag-magenta-bg-hover);
+  --_bg-press: var(--tag-magenta-bg-press);
+  --_fg: var(--tag-magenta-fg);
+  --_border: var(--tag-magenta-border);
+}
+
+.rds-tag[data-color='magenta subtle'] {
+  --_bg: var(--tag-magenta-subtle-bg);
+  --_bg-hover: var(--tag-magenta-subtle-bg-hover);
+  --_bg-press: var(--tag-magenta-subtle-bg-press);
+  --_fg: var(--tag-magenta-subtle-fg);
+  --_border: var(--tag-magenta-subtle-border);
+}
+
+.rds-tag[data-color='orange'] {
+  --_bg: var(--tag-orange-bg);
+  --_bg-hover: var(--tag-orange-bg-hover);
+  --_bg-press: var(--tag-orange-bg-press);
+  --_fg: var(--tag-orange-fg);
+  --_border: var(--tag-orange-border);
+}
+
+.rds-tag[data-color='orange subtle'] {
+  --_bg: var(--tag-orange-subtle-bg);
+  --_bg-hover: var(--tag-orange-subtle-bg-hover);
+  --_bg-press: var(--tag-orange-subtle-bg-press);
+  --_fg: var(--tag-orange-subtle-fg);
+  --_border: var(--tag-orange-subtle-border);
+}
+
+.rds-tag[data-color='lime'] {
+  --_bg: var(--tag-lime-bg);
+  --_bg-hover: var(--tag-lime-bg-hover);
+  --_bg-press: var(--tag-lime-bg-press);
+  --_fg: var(--tag-lime-fg);
+  --_border: var(--tag-lime-border);
+}
+
+.rds-tag[data-color='lime subtle'] {
+  --_bg: var(--tag-lime-subtle-bg);
+  --_bg-hover: var(--tag-lime-subtle-bg-hover);
+  --_bg-press: var(--tag-lime-subtle-bg-press);
+  --_fg: var(--tag-lime-subtle-fg);
+  --_border: var(--tag-lime-subtle-border);
+}

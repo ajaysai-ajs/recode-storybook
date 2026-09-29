@@ -1,0 +1,179 @@
+/*
+ * Input styles. Uses only --input-* component tokens and semantic tokens.
+ * The outer .rds-input is the visible box; .rds-input__control is the real <input> inside it,
+ * with no border or background of its own.
+ * Each appearance and size fills in local "--_" variables; the shared rules read them.
+ */
+
+.rds-input {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--_gap);
+  width: 100%; /* fills its container; Figma shows it at a fixed 240px */
+  height: var(--_height);
+  padding-inline: var(--_padding-x);
+  border: var(--input-border-width) solid var(--_border);
+  border-radius: var(--_radius);
+  background: var(--_bg);
+  color: var(--_fg);
+  cursor: text;
+}
+
+.rds-input__control {
+  flex: 1;
+  min-width: 0; /* lets the text field shrink instead of overflowing the box */
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  outline: none; /* the focus ring is drawn on the outer box instead */
+  color: inherit;
+  caret-color: var(--input-caret);
+  font-family: inherit;
+  font-size: var(--_font-size);
+  line-height: var(--_line-height);
+  font-weight: var(--paragraph-regular-weight); /* Figma: Inter Regular */
+}
+
+.rds-input__control::placeholder {
+  color: var(--input-placeholder);
+  opacity: 1; /* some browsers fade placeholders by default */
+}
+
+/* ---- Sizes (Figma: Size) ---------------------------------------------------------------- */
+
+.rds-input[data-size='sm'] {
+  --_height: var(--input-size-sm-height);
+  --_padding-x: var(--input-size-sm-padding-x);
+  --_gap: var(--input-size-sm-gap);
+  --_font-size: var(--input-size-sm-font-size);
+  --_line-height: var(--input-size-sm-line-height);
+  --_radius: var(--input-size-sm-radius);
+  --_icon-size: var(--input-size-sm-icon);
+}
+
+.rds-input[data-size='md'] {
+  --_height: var(--input-size-md-height);
+  --_padding-x: var(--input-size-md-padding-x);
+  --_gap: var(--input-size-md-gap);
+  --_font-size: var(--input-size-md-font-size);
+  --_line-height: var(--input-size-md-line-height);
+  --_radius: var(--input-size-md-radius);
+  --_icon-size: var(--input-size-md-icon);
+}
+
+.rds-input[data-size='lg'] {
+  --_height: var(--input-size-lg-height);
+  --_padding-x: var(--input-size-lg-padding-x);
+  --_gap: var(--input-size-lg-gap);
+  --_font-size: var(--input-size-lg-font-size);
+  --_line-height: var(--input-size-lg-line-height);
+  --_radius: var(--input-size-lg-radius);
+  --_icon-size: var(--input-size-lg-icon);
+}
+
+/* ---- Appearances (Figma: Appearance) ---------------------------------------------------- */
+
+/* Default: bordered, on the surface colour */
+.rds-input[data-appearance='Default'] {
+  --_bg: var(--input-bg);
+  --_bg-hover: var(--input-bg-hover);
+  --_border: var(--input-border);
+  --_border-hover: var(--input-border-hover);
+  --_border-focus: var(--input-ring);
+  --_fg: var(--input-fg);
+}
+
+/* Subtle: filled; the border stays the same on hover */
+.rds-input[data-appearance='Subtle'] {
+  --_bg: var(--input-subtle-bg);
+  --_bg-hover: var(--input-subtle-bg-hover);
+  --_border: var(--input-subtle-border);
+  --_border-hover: var(--input-subtle-border);
+  --_border-focus: var(--input-ring);
+  --_fg: var(--input-fg);
+}
+
+/* Ghost: no fill or stroke in any state (as the Figma variants show). Focus shows only the
+   outer ring, and Error turns the text red instead of the border. */
+.rds-input[data-appearance='Ghost'] {
+  --_bg: var(--input-ghost-bg);
+  --_bg-hover: var(--input-ghost-bg);
+  --_border: var(--input-ghost-border);
+  --_border-hover: var(--input-ghost-border);
+  --_border-focus: var(--input-ghost-border);
+  --_fg: var(--input-fg);
+}
+
+/* ---- States (Figma: State) -------------------------------------------------------------- */
+/* Each state matches the real browser state and the forced preview (data-state). */
+
+.rds-input:is(:hover, [data-state='Hover']):not([data-state='Disabled']) {
+  background: var(--_bg-hover);
+  border-color: var(--_border-hover);
+}
+
+/* Focus and Typing look the same: the border takes the ring colour and a 2px ring appears
+   1px outside the box. `outline` follows the rounded corners and never shifts the layout. */
+.rds-input:is(:focus-within, [data-state='Focus'], [data-state='Typing']) {
+  background: var(--_bg);
+  border-color: var(--_border-focus);
+  outline: var(--input-ring-width) solid var(--input-ring);
+  outline-offset: var(--input-border-width);
+}
+
+/* Error: red border (red text on Ghost). Figma has no "error + focus" variant; here the
+   focus ring turns red too, so the error stays visible while typing. */
+.rds-input[data-invalid] {
+  --_border: var(--input-border-error);
+  --_border-hover: var(--input-border-error);
+  --_border-focus: var(--input-border-error);
+}
+
+.rds-input[data-invalid]:focus-within {
+  outline-color: var(--input-ring-error);
+}
+
+.rds-input[data-invalid][data-appearance='Ghost'] {
+  --_border: var(--input-ghost-border);
+  --_border-hover: var(--input-ghost-border);
+  --_border-focus: var(--input-ghost-border);
+  --_fg: var(--input-fg-error);
+}
+
+/* Disabled: greyed-out background and text, border unchanged (Ghost stays transparent). */
+.rds-input[data-state='Disabled'] {
+  --_fg: var(--input-fg-disabled);
+  cursor: not-allowed;
+}
+
+.rds-input[data-state='Disabled']:not([data-appearance='Ghost']) {
+  --_bg: var(--input-bg-disabled);
+}
+
+.rds-input[data-state='Disabled'] .rds-input__control {
+  cursor: not-allowed;
+}
+
+.rds-input[data-state='Disabled'] .rds-input__control::placeholder {
+  color: var(--input-fg-disabled);
+}
+
+/* ---- Parts ------------------------------------------------------------------------------ */
+
+/* Icon slots follow the text colour (Figma draws them in plain black, not a token). */
+.rds-input__icon {
+  display: inline-flex;
+  flex: none;
+  width: var(--_icon-size);
+  height: var(--_icon-size);
+  --icon-size: var(--_icon-size);
+  --icon-fg: currentColor;
+}
+
+.rds-input__icon > svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}

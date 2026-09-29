@@ -1,6 +1,6 @@
 ﻿/*
- * Button styles. Uses only component tokens (--button-*, --spinner-*, --loading-button-*)
- * and semantic tokens - no hex values, no raw scales.
+ * Button styles. Uses only component tokens (--button-*) and semantic tokens - no hex
+ * values, no raw scales. The loading spinner is the shared Spinner component.
  *
  * How it works: each variant and size below fills in a few local variables (they start with
  * "--_" to show they are private to this file). The shared rules further down only read them.
@@ -144,7 +144,6 @@
 .rds-button:is(:focus-visible, [data-state='Focus']) {
   outline: var(--ring-2) solid var(--_ring);
   outline-offset: var(--button-focus-ring-offset);
-  box-shadow: none; /* replaces the generic focus style from base.css */
 }
 
 .rds-button:disabled {

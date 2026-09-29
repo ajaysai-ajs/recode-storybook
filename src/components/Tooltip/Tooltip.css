@@ -1,0 +1,113 @@
+/*
+ * Tooltip styles. Uses only --tooltip-* component tokens and semantic tokens.
+ * The arrow is drawn with ::after; ::before is an invisible bridge over the gap so the
+ * pointer can move from the trigger onto the tooltip without it closing.
+ */
+
+.rds-tooltip {
+  position: relative;
+  display: inline-flex;
+}
+
+.rds-tooltip__bubble {
+  position: absolute;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: var(--tooltip-max-width);
+  padding: var(--tooltip-padding-y) var(--tooltip-padding-x);
+  border-radius: var(--tooltip-radius);
+  background: var(--tooltip-bg);
+  color: var(--tooltip-fg);
+  font-family: inherit;
+  font-size: var(--tooltip-font-size);
+  line-height: normal; /* Figma: "auto" line height, not a token */
+  font-weight: var(--paragraph-medium-weight); /* Figma: Inter Medium */
+  text-align: start;
+}
+
+.rds-tooltip__bubble[hidden] {
+  display: none;
+}
+
+.rds-tooltip__bubble::before,
+.rds-tooltip__bubble::after {
+  content: '';
+  position: absolute;
+}
+
+/* The arrow: an 8px box clipped to the Figma triangle (6.9px wide x 6px tall). */
+.rds-tooltip__bubble::after {
+  width: var(--tooltip-arrow-size);
+  height: var(--tooltip-arrow-size);
+  background: var(--tooltip-bg);
+}
+
+/* ---- Sides (Figma: Side) ---- */
+
+.rds-tooltip__bubble[data-side='Top'] {
+  bottom: calc(100% + var(--tooltip-arrow-size));
+  left: 50%;
+  translate: -50% 0;
+}
+.rds-tooltip__bubble[data-side='Top']::after {
+  top: 100%;
+  left: 50%;
+  translate: -50% 0;
+  clip-path: polygon(6.7% 0, 93.3% 0, 50% 75%);
+}
+.rds-tooltip__bubble[data-side='Top']::before {
+  top: 100%;
+  inset-inline: 0;
+  height: var(--tooltip-arrow-size);
+}
+
+.rds-tooltip__bubble[data-side='Bottom'] {
+  top: calc(100% + var(--tooltip-arrow-size));
+  left: 50%;
+  translate: -50% 0;
+}
+.rds-tooltip__bubble[data-side='Bottom']::after {
+  bottom: 100%;
+  left: 50%;
+  translate: -50% 0;
+  clip-path: polygon(50% 25%, 93.3% 100%, 6.7% 100%);
+}
+.rds-tooltip__bubble[data-side='Bottom']::before {
+  bottom: 100%;
+  inset-inline: 0;
+  height: var(--tooltip-arrow-size);
+}
+
+.rds-tooltip__bubble[data-side='Left'] {
+  right: calc(100% + var(--tooltip-arrow-size));
+  top: 50%;
+  translate: 0 -50%;
+}
+.rds-tooltip__bubble[data-side='Left']::after {
+  left: 100%;
+  top: 50%;
+  translate: 0 -50%;
+  clip-path: polygon(0 6.7%, 75% 50%, 0 93.3%);
+}
+.rds-tooltip__bubble[data-side='Left']::before {
+  left: 100%;
+  inset-block: 0;
+  width: var(--tooltip-arrow-size);
+}
+
+.rds-tooltip__bubble[data-side='Right'] {
+  left: calc(100% + var(--tooltip-arrow-size));
+  top: 50%;
+  translate: 0 -50%;
+}
+.rds-tooltip__bubble[data-side='Right']::after {
+  right: 100%;
+  top: 50%;
+  translate: 0 -50%;
+  clip-path: polygon(25% 50%, 100% 6.7%, 100% 93.3%);
+}
+.rds-tooltip__bubble[data-side='Right']::before {
+  right: 100%;
+  inset-block: 0;
+  width: var(--tooltip-arrow-size);
+}

@@ -1,0 +1,8 @@
+/* Blanket styles. Uses only --blanket-* component tokens. */
+
+.rds-blanket {
+  position: fixed;
+  inset: 0; /* stretch to the whole viewport, as the Figma constraints do */
+  background: var(--blanket-bg);
+  opacity: var(--blanket-z-opacity);
+}

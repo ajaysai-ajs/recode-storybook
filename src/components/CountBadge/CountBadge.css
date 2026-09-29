@@ -1,0 +1,100 @@
+/* Count badge styles. Uses only --count-badge-* component tokens and semantic tokens. */
+
+.rds-count-badge {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--count-badge-height);
+  min-width: var(--count-badge-min-width);
+  padding-inline: var(--count-badge-padding-x);
+  border-radius: var(--count-badge-radius);
+  background: var(--_bg);
+  color: var(--_fg);
+  font-family: inherit;
+  font-size: var(--count-badge-font-size);
+  line-height: var(--count-badge-line-height);
+  font-weight: var(--paragraph-medium-weight); /* Figma: Inter Medium */
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ---- Appearances (Figma: appearance) ---- */
+
+.rds-count-badge[data-appearance='neutral'] {
+  --_bg: var(--count-badge-neutral-bg);
+  --_bg-hover: var(--count-badge-neutral-bg-hover);
+  --_bg-press: var(--count-badge-neutral-bg-press);
+  --_fg: var(--count-badge-neutral-fg);
+  --_fg-press: var(--count-badge-neutral-fg);
+}
+
+.rds-count-badge[data-appearance='danger'] {
+  --_bg: var(--count-badge-danger-bg);
+  --_bg-hover: var(--count-badge-danger-bg-hover);
+  --_bg-press: var(--count-badge-danger-bg-press);
+  --_fg: var(--count-badge-danger-fg);
+  --_fg-press: var(--count-badge-danger-fg);
+}
+
+.rds-count-badge[data-appearance='warning'] {
+  --_bg: var(--count-badge-warning-bg);
+  --_bg-hover: var(--count-badge-warning-bg-hover);
+  --_bg-press: var(--count-badge-warning-bg-press);
+  --_fg: var(--count-badge-warning-fg);
+  --_fg-press: var(--count-badge-warning-fg);
+}
+
+.rds-count-badge[data-appearance='success'] {
+  --_bg: var(--count-badge-success-bg);
+  --_bg-hover: var(--count-badge-success-bg-hover);
+  --_bg-press: var(--count-badge-success-bg-press);
+  --_fg: var(--count-badge-success-fg);
+  --_fg-press: var(--count-badge-success-fg);
+}
+
+.rds-count-badge[data-appearance='information'] {
+  --_bg: var(--count-badge-information-bg);
+  --_bg-hover: var(--count-badge-information-bg-hover);
+  --_bg-press: var(--count-badge-information-bg-press);
+  --_fg: var(--count-badge-information-fg);
+  --_fg-press: var(--count-badge-information-fg);
+}
+
+.rds-count-badge[data-appearance='discovery'] {
+  --_bg: var(--count-badge-discovery-bg);
+  --_bg-hover: var(--count-badge-discovery-bg-hover);
+  --_bg-press: var(--count-badge-discovery-bg-press);
+  --_fg: var(--count-badge-discovery-fg);
+  --_fg-press: var(--count-badge-discovery-fg);
+}
+
+/* In Figma the pressed inverse badge flips its text to the dark surface colour. */
+.rds-count-badge[data-appearance='inverse'] {
+  --_bg: var(--count-badge-inverse-bg);
+  --_bg-hover: var(--count-badge-inverse-bg-hover);
+  --_bg-press: var(--count-badge-inverse-bg-press);
+  --_fg: var(--count-badge-inverse-fg);
+  --_fg-press: var(--surface-inverted);
+}
+
+/* ---- States (Figma: state) ---- */
+/* Real hover/press come from a clickable parent (tab, button, link). */
+
+.rds-count-badge[data-state='Hover'],
+:is(a, button, [role='tab']):hover > .rds-count-badge {
+  background: var(--_bg-hover);
+}
+
+.rds-count-badge[data-state='Press'],
+:is(a, button, [role='tab']):active > .rds-count-badge {
+  background: var(--_bg-press);
+  color: var(--_fg-press);
+}
+
+/* Hidden visually, still read by screen readers. */
+.rds-count-badge__label {
+  position: absolute;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

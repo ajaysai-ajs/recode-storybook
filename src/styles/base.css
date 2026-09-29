@@ -7,7 +7,6 @@
 :root {
   --font-stack-sans: var(--font-sans), system-ui, 'Segoe UI', Roboto, sans-serif;
   --font-stack-mono: var(--font-mono), ui-monospace, Consolas, monospace;
-  --shadow-focus: 0 0 0 var(--ring-2) var(--ring);
 }
 
 *,
@@ -33,9 +32,14 @@ body {
   color: var(--foreground);
 }
 
-:focus-visible {
-  outline: none;
-  box-shadow: var(--shadow-focus);
+/*
+ * Fallback focus ring for plain elements that don't style their own focus.
+ * :where() gives this rule zero priority, so any component's own focus style always wins -
+ * and there is never a second ring on top of a component's ring.
+ */
+:where(:focus-visible) {
+  outline: var(--ring-2) solid var(--ring);
+  outline-offset: var(--ring-1);
 }
 
 code,

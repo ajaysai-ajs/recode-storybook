@@ -1,0 +1,134 @@
+/*
+ * Radio styles. Uses only --radio-* component tokens and semantic tokens.
+ * The native radio is restyled with `appearance: none`; the selected dot is drawn with ::before.
+ * Built the same way as Checkbox, as the Figma description asks.
+ */
+
+.rds-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--radio-gap);
+  cursor: pointer;
+}
+
+/* The 24px frame around the 16px circle, as in Figma - a bigger area to click or tap. */
+.rds-radio__target {
+  display: inline-flex;
+  flex: none;
+  padding: var(--padding-xs);
+}
+
+.rds-radio__control {
+  position: relative;
+  box-sizing: border-box;
+  flex: none;
+  width: var(--radio-size);
+  height: var(--radio-size);
+  margin: 0;
+  appearance: none; /* removes the browser's own radio drawing */
+  border: var(--radio-border-width) solid var(--_border);
+  border-radius: 50%; /* a circle */
+  background: var(--_bg);
+  cursor: inherit;
+
+  /* Unselected colours */
+  --_bg: var(--radio-bg);
+  --_bg-hover: var(--radio-bg-hover);
+  --_bg-press: var(--radio-bg-press);
+  --_border: var(--radio-border);
+  --_border-hover: var(--radio-border-hover);
+  --_border-press: var(--radio-border);
+}
+
+/* The selected dot, centred in the circle */
+.rds-radio__control::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--radio-dot-size);
+  height: var(--radio-dot-size);
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: var(--_dot, transparent);
+}
+
+/* ---- Selected (Figma: isSelected) ------------------------------------------------------------ */
+
+.rds-radio__control:checked {
+  --_bg: var(--radio-bg-checked);
+  --_bg-hover: var(--radio-bg-checked-hover);
+  --_bg-press: var(--radio-bg-checked-press);
+  --_border: var(--radio-border-checked);
+  --_border-hover: var(--radio-border-checked-hover);
+  --_border-press: var(--radio-border-checked);
+  --_dot: var(--radio-dot);
+}
+
+/* ---- Interaction (Figma: state) ------------------------------------------------------------ */
+/* Hovering or pressing anywhere on the row (circle or label) affects the circle. */
+
+:is(.rds-radio:hover, .rds-radio[data-state='hover']) .rds-radio__control:not(:disabled) {
+  background: var(--_bg-hover);
+  border-color: var(--_border-hover);
+}
+
+/* On press the border goes back to its resting colour, as in Figma */
+:is(.rds-radio:active, .rds-radio[data-state='press']) .rds-radio__control:not(:disabled) {
+  background: var(--_bg-press);
+  border-color: var(--_border-press);
+}
+
+/* Focus ring 1px outside the circle. Only shown for keyboard focus, not mouse clicks.
+   Radio has no error ring colour in Figma, so it stays blue when invalid. */
+.rds-radio__control:focus-visible,
+.rds-radio[data-state='focus'] .rds-radio__control {
+  outline: var(--radio-ring-width) solid var(--radio-ring);
+  outline-offset: var(--radio-border-width);
+}
+
+/* ---- Invalid (Figma: isInvalid) -------------------------------------------------------------- */
+/* Red border in every state; the fill still shows selected/hover/press as normal. */
+
+.rds-radio__control[aria-invalid='true'] {
+  --_border: var(--radio-border-error);
+  --_border-hover: var(--radio-border-error);
+  --_border-press: var(--radio-border-error);
+}
+
+/* ---- Disabled (Figma: isDisabled) ------------------------------------------------------------ */
+
+.rds-radio:has(.rds-radio__control:disabled) {
+  cursor: not-allowed;
+}
+
+.rds-radio__control:disabled {
+  --_bg: var(--radio-bg-disabled);
+  --_border: var(--radio-border-disabled);
+}
+
+.rds-radio__control:disabled:checked {
+  --_dot: var(--radio-dot-disabled);
+}
+
+/* ---- Label ------------------------------------------------------------------------------------ */
+/* Figma: the "paragraph small / regular" text style */
+
+.rds-radio__label {
+  display: inline-flex;
+  gap: var(--gap-2xs);
+  color: var(--radio-label);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: var(--paragraph-small-font-size);
+  line-height: var(--paragraph-small-line-height);
+  letter-spacing: var(--paragraph-small-letter-spacing);
+  font-weight: var(--paragraph-regular-weight);
+}
+
+.rds-radio:has(.rds-radio__control:disabled) .rds-radio__label {
+  color: var(--radio-label-disabled);
+}
+
+.rds-radio__required {
+  color: var(--radio-required);
+}

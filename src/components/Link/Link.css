@@ -1,0 +1,102 @@
+﻿/*
+ * Link styles. Uses only --link-* component tokens and semantic tokens.
+ * Each appearance fills in local "--_" variables; the shared rules below read them.
+ */
+
+.rds-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--link-gap);
+  font-family: inherit;
+  font-size: var(--link-font-size);
+  line-height: var(--link-line-height);
+  font-weight: var(--paragraph-regular-weight); /* Figma: Inter Regular */
+  color: var(--_fg);
+  text-decoration: var(--_decoration);
+  text-underline-position: from-font;
+  border-radius: var(--radius-xs); /* rounds the focus outline */
+}
+
+/* ---- Appearances (Figma: appearance) ---------------------------------------------------- */
+/* Default and inverse are underlined at rest and lose the underline on hover/press.
+   Subtle is the opposite: no underline at rest, underline on hover/press. */
+
+.rds-link[data-appearance='default'] {
+  --_fg: var(--link-default-fg);
+  --_fg-hover: var(--link-default-fg-hover);
+  --_fg-press: var(--link-default-fg-press);
+  --_decoration: underline;
+  --_decoration-active: none;
+}
+
+.rds-link[data-appearance='subtle'] {
+  --_fg: var(--link-subtle-fg);
+  --_fg-hover: var(--link-subtle-fg-hover);
+  --_fg-press: var(--link-subtle-fg-press);
+  --_decoration: none;
+  --_decoration-active: underline;
+}
+
+.rds-link[data-appearance='inverse'] {
+  --_fg: var(--link-inverse-fg);
+  --_fg-hover: var(--link-inverse-fg-hover);
+  --_fg-press: var(--link-inverse-fg-press);
+  --_decoration: underline;
+  --_decoration-active: none;
+}
+
+/* Visited (Figma: hasVisited). Inverse has no visited colour in Figma, so it is left out.
+   The forced preview [data-visited] can swap the variables... */
+.rds-link[data-visited]:not([data-appearance='inverse']) {
+  --_fg: var(--link-visited-fg);
+  --_fg-hover: var(--link-visited-fg-hover);
+  --_fg-press: var(--link-visited-fg-press);
+}
+
+/* ...but for privacy, browsers only let real :visited links change `color` directly
+   (variables are ignored there), so those get their own rules. */
+.rds-link:visited:not([data-appearance='inverse']) {
+  color: var(--link-visited-fg);
+}
+
+.rds-link:visited:not([data-appearance='inverse']):hover {
+  color: var(--link-visited-fg-hover);
+}
+
+.rds-link:visited:not([data-appearance='inverse']):active {
+  color: var(--link-visited-fg-press);
+}
+
+/* ---- States (Figma: state) -------------------------------------------------------------- */
+
+.rds-link:is(:hover, [data-state='hover']) {
+  color: var(--_fg-hover);
+  text-decoration: var(--_decoration-active);
+}
+
+.rds-link:is(:active, [data-state='press']) {
+  color: var(--_fg-press);
+  text-decoration: var(--_decoration-active);
+}
+
+/* Figma has no focus state for Link, so this uses the shared semantic focus colour. */
+.rds-link:focus-visible {
+  outline: var(--ring-2) solid var(--ring);
+  outline-offset: var(--ring-1);
+}
+
+/* ---- Parts ------------------------------------------------------------------------------ */
+
+.rds-link__icon {
+  flex: none;
+  width: var(--link-icon-size);
+  height: var(--link-icon-size);
+  fill: currentColor;
+}
+
+/* Hidden visually, still read by screen readers. */
+.rds-link__hint {
+  position: absolute;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
