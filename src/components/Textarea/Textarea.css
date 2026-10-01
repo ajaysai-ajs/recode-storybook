@@ -1,0 +1,102 @@
+/*
+ * Textarea styles. Uses only --textarea-* component tokens and semantic tokens.
+ * Each appearance fills in local "--_" variables; the shared rules read them.
+ */
+
+.rds-textarea {
+  box-sizing: border-box;
+  display: block;
+  width: 100%; /* fills its container; Figma shows it at a fixed 400px */
+  min-height: var(--textarea-min-height);
+  margin: 0;
+  padding: var(--textarea-padding-y) var(--textarea-padding-x);
+  border: var(--textarea-border-width) solid var(--_border);
+  border-radius: var(--textarea-radius);
+  background: var(--_bg);
+  color: var(--_fg);
+  caret-color: var(--textarea-caret);
+  font-family: inherit;
+  font-size: var(--textarea-font-size);
+  line-height: var(--textarea-line-height);
+  font-weight: var(--paragraph-regular-weight); /* Figma: Inter Regular */
+  resize: vertical; /* people can drag the corner to make it taller, not wider */
+}
+
+.rds-textarea::placeholder {
+  color: var(--textarea-placeholder);
+  opacity: 1; /* some browsers fade placeholders by default */
+}
+
+/* ---- Appearances (Figma: Appearance) ---------------------------------------------------- */
+
+/* Default: bordered, on the surface colour */
+.rds-textarea[data-appearance='Default'] {
+  --_bg: var(--textarea-bg);
+  --_bg-hover: var(--textarea-bg-hover);
+  --_border: var(--textarea-border);
+  --_border-hover: var(--textarea-border-hover);
+  --_fg: var(--textarea-fg);
+}
+
+/* Subtle: filled; the border stays the same on hover */
+.rds-textarea[data-appearance='Subtle'] {
+  --_bg: var(--textarea-subtle-bg);
+  --_bg-hover: var(--textarea-subtle-bg-hover);
+  --_border: var(--textarea-subtle-border);
+  --_border-hover: var(--textarea-subtle-border);
+  --_fg: var(--textarea-fg);
+}
+
+/* Ghost: no fill or stroke, and no hover fill (as the Figma variants show) */
+.rds-textarea[data-appearance='Ghost'] {
+  --_bg: var(--textarea-ghost-bg);
+  --_bg-hover: var(--textarea-ghost-bg);
+  --_border: var(--textarea-ghost-border);
+  --_border-hover: var(--textarea-ghost-border);
+  --_fg: var(--textarea-fg);
+}
+
+/* ---- States (Figma: State) -------------------------------------------------------------- */
+/* Each state matches the real browser state and the forced preview (data-state). */
+
+.rds-textarea:is(:hover, [data-state='Hover']):not(:disabled) {
+  background: var(--_bg-hover);
+  border-color: var(--_border-hover);
+}
+
+/* Focus and Typing: a 2px ring drawn over the border, INSIDE the box (as in Figma), so the
+   text never shifts. Figma shows no ring on Ghost, but focus must always be visible, so Ghost
+   gets the same ring here. */
+.rds-textarea:is(:focus, [data-state='Focus'], [data-state='Typing']) {
+  background: var(--_bg);
+  outline: var(--textarea-ring-width) solid var(--_ring, var(--textarea-ring));
+  outline-offset: calc(var(--textarea-ring-width) * -1);
+}
+
+/* Error: red border (red text on Ghost). When focused, the ring turns red too. */
+.rds-textarea[aria-invalid='true'] {
+  --_border: var(--textarea-border-error);
+  --_border-hover: var(--textarea-border-error);
+  --_ring: var(--textarea-ring-error);
+}
+
+.rds-textarea[aria-invalid='true'][data-appearance='Ghost'] {
+  --_border: var(--textarea-ghost-border);
+  --_border-hover: var(--textarea-ghost-border);
+  --_fg: var(--textarea-fg-error);
+}
+
+/* Disabled: greyed-out background and text, border unchanged (Ghost stays transparent). */
+.rds-textarea:disabled {
+  --_fg: var(--textarea-fg-disabled);
+  cursor: not-allowed;
+  resize: none;
+}
+
+.rds-textarea:disabled:not([data-appearance='Ghost']) {
+  --_bg: var(--textarea-bg-disabled);
+}
+
+.rds-textarea:disabled::placeholder {
+  color: var(--textarea-fg-disabled);
+}

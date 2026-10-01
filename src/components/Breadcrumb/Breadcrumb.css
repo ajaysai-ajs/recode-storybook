@@ -1,0 +1,88 @@
+/* Breadcrumb styles. Uses only --breadcrumb-* component tokens and semantic tokens. */
+
+.rds-breadcrumb__list {
+  display: flex;
+  flex-wrap: wrap; /* long trails wrap onto a second line instead of overflowing */
+  align-items: center;
+  gap: var(--breadcrumb-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* One hop: the label, then its separator, `breadcrumb/gap` apart (as in Figma) */
+.rds-breadcrumb__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--breadcrumb-gap);
+  font-family: inherit;
+  font-size: var(--breadcrumb-font-size);
+  line-height: var(--breadcrumb-line-height);
+  font-weight: var(--breadcrumb-font-weight);
+  color: var(--breadcrumb-fg);
+}
+
+/* ---- Link ------------------------------------------------------------------------------------ */
+
+.rds-breadcrumb__link {
+  color: inherit;
+  text-decoration: none;
+  text-underline-position: from-font;
+  border-radius: var(--radius-xs); /* rounds the focus outline */
+}
+
+/* Hover: darker text and an underline */
+:is(.rds-breadcrumb__link:hover, [data-state='Hover'] .rds-breadcrumb__link) {
+  color: var(--breadcrumb-fg-hover);
+  text-decoration: underline;
+}
+
+/* ---- Current page ---------------------------------------------------------------------------- */
+
+.rds-breadcrumb__current {
+  color: var(--breadcrumb-fg-current);
+  font-weight: var(--breadcrumb-font-weight-current); /* Medium, so it doesn't rely on colour alone */
+}
+
+/* ---- Ellipsis -------------------------------------------------------------------------------- */
+
+.rds-breadcrumb__ellipsis {
+  display: inline-flex;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--breadcrumb-fg);
+  cursor: pointer;
+}
+
+:is(.rds-breadcrumb__ellipsis:hover, [data-state='Hover'] .rds-breadcrumb__ellipsis) {
+  color: var(--breadcrumb-fg-hover);
+}
+
+/* ---- Icons (separator and ellipsis dots) ----------------------------------------------------- */
+/* Drawn as 1.5px strokes, as in the Figma icons (there is no token for icon stroke weight). */
+
+.rds-breadcrumb__separator,
+.rds-breadcrumb__ellipsis svg {
+  flex: none;
+  width: var(--breadcrumb-separator-size);
+  height: var(--breadcrumb-separator-size);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.rds-breadcrumb__separator {
+  color: var(--breadcrumb-separator);
+}
+
+/* ---- Focus (not in Figma, so it uses the shared semantic focus colour) ----------------------- */
+
+.rds-breadcrumb__link:focus-visible,
+.rds-breadcrumb__ellipsis:focus-visible {
+  outline: var(--ring-2) solid var(--ring);
+  outline-offset: var(--ring-1);
+}

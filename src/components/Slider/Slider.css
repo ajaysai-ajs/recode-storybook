@@ -1,0 +1,95 @@
+/*
+ * Slider styles. Uses only --slider-* component tokens.
+ * A native range input is made of parts the browser draws (track, thumb); each browser names
+ * them differently, so Chrome/Safari (-webkit-) and Firefox (-moz-) each get their own rules.
+ */
+
+.rds-slider {
+  box-sizing: border-box;
+  display: block;
+  width: var(--slider-default-width);
+  max-width: 100%;
+  height: var(--slider-thumb-size); /* as tall as the thumb, as in Figma */
+  margin: 0;
+  appearance: none; /* removes the browser's own slider drawing */
+  background: transparent;
+  cursor: pointer;
+
+  --_track: var(--slider-track);
+  --_range: var(--slider-range);
+  --_thumb-border: var(--slider-thumb-border);
+  --_ring: none;
+  /* The filled part ends at the middle of the thumb. The thumb's centre travels from half a
+     thumb in from the left to half a thumb in from the right, hence this sum. */
+  --_fill: calc(var(--slider-thumb-size) / 2 + (100% - var(--slider-thumb-size)) * var(--_ratio, 0));
+}
+
+/* The input itself never shows a focus outline; the ring is drawn round the thumb instead */
+.rds-slider:focus-visible {
+  outline: none;
+}
+
+/* ---- States (Figma: State) ------------------------------------------------------------------- */
+
+.rds-slider:is(:hover, [data-state='Hover']):not(:disabled) {
+  --_thumb-border: var(--slider-thumb-border-hover);
+}
+
+.rds-slider:is(:focus-visible, [data-state='Focus']) {
+  --_ring: 0 0 0 var(--slider-ring-width) var(--slider-ring);
+}
+
+.rds-slider:disabled {
+  cursor: not-allowed;
+
+  --_track: var(--slider-track-disabled);
+  --_range: var(--slider-range-disabled);
+  --_thumb-border: var(--slider-thumb-border-disabled);
+}
+
+/* ---- Chrome, Edge, Safari ---------------------------------------------------------------- */
+
+.rds-slider::-webkit-slider-runnable-track {
+  height: var(--slider-track-height);
+  border-radius: var(--slider-radius);
+  /* Filled colour up to the thumb, track colour after it */
+  background: linear-gradient(to right, var(--_range) var(--_fill), var(--_track) var(--_fill));
+}
+
+.rds-slider::-webkit-slider-thumb {
+  box-sizing: border-box;
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
+  /* Centre the thumb on the (thinner) track */
+  margin-top: calc((var(--slider-track-height) - var(--slider-thumb-size)) / 2);
+  appearance: none;
+  border: var(--slider-thumb-border-width) solid var(--_thumb-border);
+  border-radius: var(--slider-radius);
+  background: var(--slider-thumb);
+  box-shadow: var(--_ring);
+}
+
+/* ---- Firefox ---------------------------------------------------------------------------------- */
+
+.rds-slider::-moz-range-track {
+  height: var(--slider-track-height);
+  border-radius: var(--slider-radius);
+  background: var(--_track);
+}
+
+/* Firefox draws the filled part for us */
+.rds-slider::-moz-range-progress {
+  height: var(--slider-track-height);
+  border-radius: var(--slider-radius);
+  background: var(--_range);
+}
+
+.rds-slider::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
+  border: var(--slider-thumb-border-width) solid var(--_thumb-border);
+  border-radius: var(--slider-radius);
+  background: var(--slider-thumb);
+  box-shadow: var(--_ring);
+}

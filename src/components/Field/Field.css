@@ -1,0 +1,68 @@
+/* Field styles. Uses only --field-* and --label-* component tokens and semantic tokens. */
+
+/* Label, control and message stacked, `field/gap` apart (as in Figma) */
+.rds-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--field-gap);
+  font-family: inherit;
+}
+
+/* ---- Label --------------------------------------------------------------------------------- */
+
+.rds-field__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--label-gap);
+  color: var(--label-fg);
+  font-size: var(--label-font-size);
+  line-height: var(--field-label-line-height);
+  font-weight: var(--label-font-weight);
+}
+
+.rds-field__required {
+  color: var(--label-required);
+}
+
+/* The message area collapses when there is no message, so it doesn't leave a gap */
+.rds-field__message-area:empty {
+  display: none;
+}
+
+/* ---- Message (Figma: RDS Field Message) ----------------------------------------------------- */
+
+.rds-field__message {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--field-message-gap);
+  margin: 0;
+  color: var(--_fg);
+  font-size: var(--field-description-font-size);
+  line-height: var(--field-description-line-height);
+  font-weight: var(--paragraph-regular-weight); /* Figma: Inter Regular */
+
+  --_fg: var(--field-description);
+}
+
+.rds-field__message[data-tone='error'] {
+  --_fg: var(--field-error);
+}
+
+.rds-field__message[data-tone='success'] {
+  --_fg: var(--field-success);
+}
+
+/* The warning / check icon, drawn in the message colour */
+.rds-field__message svg {
+  flex: none;
+  width: var(--field-message-icon-size);
+  height: var(--field-message-icon-size);
+  fill: currentColor;
+}
+
+/* Hidden visually, still read by screen readers ("Error: ...") */
+.rds-field__hint {
+  position: absolute;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

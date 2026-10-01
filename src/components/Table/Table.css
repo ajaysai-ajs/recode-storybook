@@ -1,0 +1,190 @@
+/*
+ * Table styles. Uses only --table-* component tokens and semantic tokens.
+ * Text follows the Figma text styles the parts are bound to (Paragraph small / mini).
+ */
+
+.rds-table {
+  width: 100%;
+  border-collapse: collapse; /* neighbouring cells share one border line */
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+/* ---- Caption --------------------------------------------------------------------------------- */
+
+.rds-table__caption {
+  padding-block-end: var(--table-cell-padding-y);
+  color: var(--table-caption);
+  text-align: start;
+  font-size: var(--paragraph-small-font-size);
+  line-height: var(--paragraph-small-line-height);
+}
+
+/* Hidden visually, still read by screen readers. */
+.rds-table__caption[data-hidden] {
+  position: absolute;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---- Table Header ---------------------------------------------------------------------------- */
+
+.rds-table__header {
+  box-sizing: border-box;
+  height: var(--table-header-height);
+  padding: 0 var(--table-cell-padding-x);
+  border-bottom: var(--table-border-width) solid var(--table-border);
+  background: var(--_bg);
+  color: var(--table-header-fg);
+  text-align: start;
+  vertical-align: middle;
+  font-size: var(--paragraph-small-font-size);
+  line-height: var(--paragraph-small-line-height);
+  letter-spacing: var(--paragraph-small-letter-spacing);
+  font-weight: var(--paragraph-bold-weight); /* Figma: Paragraph small, bold weight */
+
+  --_bg: var(--table-header-bg);
+}
+
+/* Hover only on headers you can click (sortable), or when forced for a preview */
+.rds-table__header[data-sortable]:hover,
+.rds-table__header[data-state='Hover'] {
+  --_bg: var(--table-header-bg-hover);
+}
+
+.rds-table__header[data-sortable]:active {
+  --_bg: var(--table-header-bg-active);
+}
+
+/* A sortable header: the button fills the whole cell, so the padding moves onto it */
+.rds-table__header[data-sortable] {
+  padding: 0;
+}
+
+.rds-table__sort-button {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--table-cell-gap);
+  width: 100%;
+  height: var(--table-header-height);
+  margin: 0;
+  padding: 0 var(--table-cell-padding-x);
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+/* Keyboard focus: a ring drawn inside the header, so neighbouring cells don't cover it */
+.rds-table__sort-button:focus-visible {
+  outline: var(--ring-2) solid var(--ring);
+  outline-offset: calc(var(--ring-2) * -1);
+}
+
+/* The label takes the free space, pushing the arrows to the end (as in Figma) */
+.rds-table__header-label {
+  flex: 1;
+}
+
+/* ---- Sort ------------------------------------------------------------------------------------ */
+
+.rds-table-sort {
+  display: inline-flex;
+  flex: none;
+  inline-size: fit-content; /* never stretch, e.g. inside a grid */
+  border-radius: var(--radius-md);
+}
+
+.rds-table-sort svg {
+  width: var(--table-sort-icon-size);
+  height: var(--table-sort-icon-size);
+}
+
+/*
+ * Both arrows are light; the one for the current order turns dark.
+ * Figma paints the light arrows with a "disabled" grey (select/fg disabled), so we use the
+ * semantic disabled colour. The table/sort icon token is too dark to tell the arrows apart.
+ */
+.rds-table-sort path {
+  fill: var(--state-disabled-foreground);
+}
+
+.rds-table-sort[data-sort-order='ascending'] .rds-table-sort__up,
+.rds-table-sort[data-sort-order='descending'] .rds-table-sort__down {
+  fill: var(--foreground);
+}
+
+/* Figma's Focus state for the Sort on its own (in a table, the header button shows the ring) */
+.rds-table-sort[data-state='Focus'] {
+  outline: var(--ring-2) solid var(--ring);
+}
+
+/* ---- Rows and cells -------------------------------------------------------------------------- */
+
+.rds-table__row {
+  background: var(--_bg);
+
+  --_bg: var(--table-row-bg);
+}
+
+.rds-table__row:hover {
+  --_bg: var(--table-row-bg-hover);
+}
+
+.rds-table__row[data-selected] {
+  --_bg: var(--table-row-bg-selected);
+}
+
+.rds-table__cell {
+  box-sizing: border-box;
+  height: var(--table-cell-height); /* in a table cell, height works as a minimum */
+  padding: var(--table-cell-padding-y) var(--table-cell-padding-x);
+  border-bottom: var(--table-border-width) solid var(--table-border-subtle);
+  color: var(--table-cell-fg);
+  vertical-align: middle;
+}
+
+/* A cell used on its own (e.g. in the docs) still gets the row colour */
+.rds-table__cell:not(.rds-table__row > *) {
+  background: var(--table-row-bg);
+}
+
+.rds-table__cell-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.rds-table__cell-label {
+  font-size: var(--paragraph-small-font-size);
+  line-height: var(--paragraph-small-line-height);
+  letter-spacing: var(--paragraph-small-letter-spacing);
+  font-weight: var(--paragraph-regular-weight);
+}
+
+.rds-table__cell-secondary {
+  color: var(--table-cell-fg-secondary);
+  font-size: var(--paragraph-mini-font-size);
+  line-height: var(--paragraph-mini-line-height);
+  letter-spacing: var(--paragraph-mini-letter-spacing);
+  font-weight: var(--paragraph-regular-weight);
+}
+
+.rds-table__cell-badges,
+.rds-table__cell-checkbox {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--table-cell-gap);
+}
+
+.rds-table__cell-checkbox {
+  flex-wrap: nowrap;
+}
+
+/* The row-selection column is only as wide as its checkbox */
+.rds-table__select {
+  width: 0;
+}

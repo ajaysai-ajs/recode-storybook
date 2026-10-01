@@ -1,0 +1,55 @@
+/* Banner styles. Uses only --banner-* component tokens and semantic tokens. */
+
+.rds-banner {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center; /* as in Figma: the icon stays centred when the message wraps */
+  gap: var(--banner-gap);
+  width: 100%; /* a banner spans its container */
+  padding: var(--banner-padding);
+  border-radius: var(--banner-radius);
+  background: var(--_bg);
+  color: var(--_fg);
+}
+
+.rds-banner[data-appearance='warning'] {
+  --_bg: var(--banner-warning-bg);
+  --_fg: var(--banner-warning-fg);
+}
+
+.rds-banner[data-appearance='error'] {
+  --_bg: var(--banner-error-bg);
+  --_fg: var(--banner-error-fg);
+}
+
+.rds-banner[data-appearance='announcement'] {
+  --_bg: var(--banner-announcement-bg);
+  --_fg: var(--banner-announcement-fg);
+}
+
+/* The icon slot: any icon inside takes the slot's size and the text colour */
+.rds-banner__icon {
+  display: inline-flex;
+  flex: none;
+  width: var(--banner-icon-size);
+  height: var(--banner-icon-size);
+
+  --icon-size: var(--banner-icon-size);
+  --icon-fg: currentColor;
+}
+
+.rds-banner__icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.rds-banner__message {
+  flex: 1;
+  margin: 0;
+  padding: 0 var(--banner-content-padding-x);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: var(--banner-font-size);
+  line-height: var(--banner-line-height);
+  font-weight: var(--paragraph-regular-weight); /* Figma: Inter Regular (not bound to a token) */
+}

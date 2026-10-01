@@ -1,0 +1,179 @@
+/*
+ * Split Button styles. Uses only --split-button-*, --button-* and --menu-* component tokens
+ * and semantic tokens. The main action is the Button component; this file only squares its
+ * right corners and styles the divider, the trigger and the menu.
+ */
+
+.rds-split-button {
+  display: inline-flex;
+}
+
+.rds-split-button__group {
+  display: inline-flex;
+  align-items: stretch;
+}
+
+/* ---- Sizes (Figma: Size) - all three parts share Button's scale ---------------------------- */
+
+.rds-split-button[data-size='sm'] {
+  --_height: var(--split-button-sm-height);
+  --_trigger-width: var(--split-button-sm-trigger-width);
+  --_radius: var(--split-button-sm-radius);
+}
+
+.rds-split-button[data-size='md'] {
+  --_height: var(--split-button-md-height);
+  --_trigger-width: var(--split-button-md-trigger-width);
+  --_radius: var(--split-button-md-radius);
+}
+
+/* ---- <PrimaryAction>: square the Button's right side so the seam is drawn once, by the divider */
+
+.rds-split-button .rds-split-button__action {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+  border-inline-end-width: 0;
+}
+
+/* ---- Divider -------------------------------------------------------------------------------- */
+
+.rds-split-button__divider {
+  flex: none;
+  width: var(--split-button-divider-width);
+  height: var(--_height);
+  background: var(--split-button-divider);
+}
+
+.rds-split-button[data-appearance='primary'] .rds-split-button__divider {
+  background: var(--split-button-divider-primary);
+}
+
+.rds-split-button__group[data-disabled] .rds-split-button__divider {
+  background: var(--split-button-divider-disabled);
+}
+
+/* ---- <SecondaryAction>: the trigger ------------------------------------------------------------ */
+/* Styled like Button (same tokens), square, with the left side flat against the divider. */
+
+.rds-split-button__trigger {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--_trigger-width);
+  height: var(--_height);
+  margin: 0;
+  padding: 0;
+  border: var(--button-border-width) solid var(--_border);
+  border-inline-start-width: 0;
+  border-start-end-radius: var(--_radius);
+  border-end-end-radius: var(--_radius);
+  background: var(--_bg);
+  color: var(--_fg);
+  cursor: pointer;
+  --icon-size: var(--split-button-caret-size);
+  --icon-fg: currentColor;
+}
+
+.rds-split-button[data-appearance='default'] .rds-split-button__trigger {
+  --_bg: var(--button-secondary-bg);
+  --_bg-hover: var(--button-secondary-bg-hover);
+  --_bg-active: var(--button-secondary-bg-active);
+  --_fg: var(--button-secondary-fg);
+  --_border: var(--button-secondary-border);
+}
+
+.rds-split-button[data-appearance='primary'] .rds-split-button__trigger {
+  --_bg: var(--button-primary-bg);
+  --_bg-hover: var(--button-primary-bg-hover);
+  --_bg-active: var(--button-primary-bg-active);
+  --_fg: var(--button-primary-fg);
+  --_border: var(--button-primary-border);
+}
+
+.rds-split-button__trigger:hover:not(:disabled) {
+  background: var(--_bg-hover);
+}
+
+/* Figma: state=selected is the open state; it uses the pressed colour */
+.rds-split-button__trigger:is(:active, [data-state='selected']):not(:disabled) {
+  background: var(--_bg-active);
+}
+
+/* Focus ring outside the trigger. `outline` follows the corners: square on the left against
+   the divider, rounded on the right - the same shape Figma draws. */
+.rds-split-button__trigger:focus-visible {
+  outline: var(--ring-2) solid var(--button-focus-ring);
+  outline-offset: var(--button-focus-ring-offset);
+}
+
+/* (".rds-split-button" in front makes this beat the appearance rules above) */
+.rds-split-button .rds-split-button__trigger:disabled {
+  --_bg: var(--button-disabled-bg);
+  --_fg: var(--button-disabled-fg);
+  --_border: var(--button-disabled-border);
+  cursor: not-allowed;
+}
+
+/* ---- Dropdown Menu ------------------------------------------------------------------------------ */
+
+/* The browser shows popovers in the top layer; the default centring is removed so the script
+   can place it under the button, a small gap below. */
+.rds-split-button__menu {
+  position: fixed;
+  inset: auto;
+  box-sizing: border-box;
+  min-width: var(--popover-min-width);
+  margin: 0;
+  margin-block-start: var(--gap-xs);
+  padding: var(--menu-padding);
+  border: var(--border-width-1) solid var(--menu-border);
+  border-radius: var(--menu-radius);
+  background: var(--menu-bg);
+  box-shadow: var(--shadow-md); /* Figma: the Shadow/md effect style */
+}
+
+.rds-split-button__menu:popover-open {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Menu items. Figma has no item design yet, so these use the menu/* tokens with the
+   paragraph small text style. */
+.rds-split-button__item {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: var(--menu-item-height);
+  margin: 0;
+  padding: 0 var(--menu-item-padding-x);
+  border: 0;
+  border-radius: var(--menu-item-radius);
+  background: transparent;
+  color: var(--menu-item-fg);
+  font-family: inherit;
+  font-size: var(--paragraph-small-font-size);
+  line-height: var(--paragraph-small-line-height);
+  font-weight: var(--paragraph-regular-weight);
+  text-align: start;
+  cursor: pointer;
+}
+
+.rds-split-button__item:is(:hover, :focus-visible):not([aria-disabled='true']) {
+  background: var(--menu-item-bg-hover);
+}
+
+.rds-split-button__item:focus-visible {
+  outline: var(--ring-2) solid var(--ring);
+  outline-offset: calc(var(--ring-2) * -1);
+}
+
+.rds-split-button__item[data-destructive] {
+  color: var(--menu-item-fg-destructive);
+}
+
+.rds-split-button__item[aria-disabled='true'] {
+  color: var(--menu-item-fg-disabled);
+  cursor: not-allowed;
+}

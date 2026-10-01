@@ -1,0 +1,156 @@
+/*
+ * Alert styles. Uses only --alert-* component tokens and semantic tokens.
+ * Figma binds padding and radius to tokens from another library (space.200, radius.large);
+ * the matching RDS tokens alert/padding and alert/radius are used here instead.
+ */
+
+.rds-alert {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--alert-gap);
+  padding: var(--alert-padding);
+  border-radius: var(--alert-radius);
+  background: var(--_bg);
+  color: var(--_fg);
+  box-shadow: var(--shadow-lg); /* Figma: the Shadow/lg effect style */
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+/* ---- Appearances (Figma: appearance) ------------------------------------------------------ */
+/* The status appearances are filled with no stroke (the alert border tokens are unused). */
+
+.rds-alert[data-appearance='default'] {
+  --_bg: var(--alert-default-bg);
+  --_fg: var(--alert-default-fg);
+  --_icon: var(--alert-default-icon);
+  --_description: var(--alert-description);
+  --_button: var(--muted-foreground);
+  --_button-hover: var(--alert-default-fg);
+}
+
+.rds-alert[data-appearance='success'] {
+  --_bg: var(--alert-success-bg);
+  --_fg: var(--alert-success-fg);
+  --_icon: var(--alert-success-icon);
+}
+
+.rds-alert[data-appearance='destructive'] {
+  --_bg: var(--alert-destructive-bg);
+  --_fg: var(--alert-destructive-fg);
+  --_icon: var(--alert-destructive-icon);
+}
+
+.rds-alert[data-appearance='warning'] {
+  --_bg: var(--alert-warning-bg);
+  --_fg: var(--alert-warning-fg);
+  --_icon: var(--alert-warning-icon);
+}
+
+.rds-alert[data-appearance='info'] {
+  --_bg: var(--alert-info-bg);
+  --_fg: var(--alert-info-fg);
+  --_icon: var(--alert-info-icon);
+}
+
+/* ---- Parts --------------------------------------------------------------------------------- */
+
+/* The icon sits in a box as tall as the close button (24px, as in Figma), so the icon,
+   title and button line up */
+.rds-alert__icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  height: var(--size-icon-lg);
+  color: var(--_icon);
+}
+
+.rds-alert__icon svg {
+  width: var(--alert-icon-size);
+  height: var(--alert-icon-size);
+  fill: currentColor;
+}
+
+.rds-alert__content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  min-width: 0;
+}
+
+.rds-alert__header {
+  display: flex;
+  align-items: center;
+  gap: var(--alert-gap);
+  min-height: var(--size-icon-lg);
+}
+
+/* Figma: "paragraph small / bold" text style */
+.rds-alert__title {
+  flex: 1;
+  margin: 0;
+  font-size: var(--paragraph-small-font-size);
+  line-height: var(--paragraph-small-line-height);
+  letter-spacing: var(--paragraph-small-letter-spacing);
+  font-weight: var(--paragraph-bold-weight);
+}
+
+.rds-alert__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.rds-alert__body[hidden] {
+  display: none;
+}
+
+/* Figma: "paragraph small / medium" text style */
+.rds-alert__description {
+  margin: 0;
+  color: var(--_description, var(--_fg));
+  font-size: var(--alert-description-font-size);
+  line-height: var(--paragraph-small-line-height);
+  letter-spacing: var(--paragraph-small-letter-spacing);
+  font-weight: var(--paragraph-medium-weight);
+}
+
+.rds-alert__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+/* The close (x) / chevron button: a 16px glyph with 4px padding (Figma: "clear") */
+.rds-alert__button {
+  display: inline-flex;
+  flex: none;
+  padding: var(--padding-xs);
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: transparent;
+  color: var(--_button, var(--_fg));
+  cursor: pointer;
+}
+
+.rds-alert__button svg {
+  width: var(--alert-icon-size);
+  height: var(--alert-icon-size);
+  fill: currentColor;
+}
+
+.rds-alert__button:hover {
+  color: var(--_button-hover, var(--_fg));
+}
+
+.rds-alert__button:focus-visible {
+  outline: var(--ring-2) solid var(--ring);
+  outline-offset: 0;
+}
+
+/* The chevron points up when the details are showing */
+.rds-alert__button[aria-expanded='true'] svg {
+  rotate: 180deg;
+}

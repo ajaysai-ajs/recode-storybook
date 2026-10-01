@@ -1,0 +1,112 @@
+/*
+ * Resizable styles. Uses the --resizable-* tokens for the handle and, as in Figma, the card
+ * tokens (card/bg, card/border, card/radius) for the surface.
+ */
+
+.rds-resizable {
+  box-sizing: border-box;
+  display: flex;
+  overflow: hidden; /* panels stay inside the rounded corners */
+  border: var(--card-border-width) solid var(--card-border);
+  border-radius: var(--card-radius);
+  background: var(--card-bg);
+}
+
+.rds-resizable[data-orientation='Vertical'] {
+  flex-direction: column;
+}
+
+/* While dragging: no text selection, and the resize cursor everywhere (not just on the handle) */
+.rds-resizable[data-dragging] {
+  cursor: col-resize;
+  user-select: none;
+}
+
+.rds-resizable[data-orientation='Vertical'][data-dragging] {
+  cursor: row-resize;
+}
+
+/* ---- Panels ---------------------------------------------------------------------------------- */
+
+.rds-resizable__panel {
+  flex-grow: 0;
+  flex-shrink: 0;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto; /* content that doesn't fit scrolls inside its panel */
+}
+
+/* The second panel takes whatever space is left */
+.rds-resizable__panel[data-grow] {
+  flex: 1 1 0;
+}
+
+/* ---- Handle ---------------------------------------------------------------------------------- */
+
+/*
+ * The handle is wider than the 1px line you see, so it is easy to grab (Figma: a 9px frame
+ * around the line). The extra space comes from a small gap on each side.
+ */
+.rds-resizable__handle {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--resizable-handle-width) + 2 * var(--gap-xs));
+  touch-action: none; /* let us handle touch drags instead of the page scrolling */
+  cursor: col-resize;
+  outline: none;
+
+  --_color: var(--resizable-handle);
+}
+
+.rds-resizable[data-orientation='Vertical'] > .rds-resizable__handle {
+  width: auto;
+  height: calc(var(--resizable-handle-width) + 2 * var(--gap-xs));
+  cursor: row-resize;
+}
+
+/* Hover, dragging (data-state is set while dragging) and keyboard focus show the brand colour */
+.rds-resizable__handle:is(:hover, :focus-visible, [data-state='Hover']) {
+  --_color: var(--resizable-handle-hover);
+}
+
+/* Keyboard focus also gets the RDS focus ring around the grab area */
+.rds-resizable__handle:focus-visible {
+  outline: var(--ring-2) solid var(--ring);
+  outline-offset: calc(var(--ring-2) * -1);
+}
+
+/* The thin line, full length */
+.rds-resizable__line {
+  position: absolute;
+  inset-block: 0;
+  width: var(--resizable-handle-width);
+  background: var(--_color);
+}
+
+.rds-resizable[data-orientation='Vertical'] .rds-resizable__line {
+  inset-block: auto;
+  inset-inline: 0;
+  width: auto;
+  height: var(--resizable-handle-width);
+}
+
+/* The small pill in the middle that hints "you can drag this" */
+.rds-resizable__grip {
+  position: relative;
+  width: var(--_grip-thickness);
+  height: var(--_grip-length);
+  border-radius: var(--radius-full);
+  background: var(--_color);
+
+  /* Figma draws the grip 3 x 22, which has no tokens; these are the nearest token-based sizes */
+  --_grip-thickness: calc(var(--resizable-handle-width) * 3);
+  --_grip-length: var(--size-24);
+}
+
+.rds-resizable[data-orientation='Vertical'] .rds-resizable__grip {
+  width: var(--_grip-length);
+  height: var(--_grip-thickness);
+}

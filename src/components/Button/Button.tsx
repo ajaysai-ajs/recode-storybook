@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, MouseEvent, ReactNode } from 'react';
+import type { ButtonHTMLAttributes, MouseEvent, ReactNode, Ref } from 'react';
 
 import { EXTRA_GLYPHS } from '../Icon/icons';
 import { Spinner, type SpinnerSize, type SpinnerTone } from '../Spinner/Spinner';
@@ -34,6 +34,8 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
   trailingIcon?: boolean;
   /** Figma: icon - the icon to show in the leading/trailing slot. Falls back to a placeholder. */
   icon?: ReactNode;
+  /** Lets other code reach the <button>, e.g. to move focus to it */
+  ref?: Ref<HTMLButtonElement>;
 }
 
 export function Button({

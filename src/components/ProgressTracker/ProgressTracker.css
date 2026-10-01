@@ -1,0 +1,132 @@
+/* Progress tracker styles. Uses only --progress-tracker-* component tokens and semantic tokens. */
+
+/* ---- The row of steps ------------------------------------------------------------------------ */
+
+.rds-progress-tracker {
+  display: flex;
+  gap: var(--_gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  --_gap: var(--progress-tracker-cosy-item-gap);
+}
+
+.rds-progress-tracker[data-spacing='comfortable'] {
+  --_gap: var(--progress-tracker-comfortable-item-gap);
+}
+
+/* Figma spells it "cozy"; the token is spelled "cosy" */
+.rds-progress-tracker[data-spacing='cozy'] {
+  --_gap: var(--progress-tracker-cosy-item-gap);
+}
+
+.rds-progress-tracker[data-spacing='compact'] {
+  --_gap: var(--progress-tracker-compact-item-gap);
+}
+
+/* Every step takes an equal share of the width (Figma: fill) */
+.rds-progress-tracker__step {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---- One step (Progress tracker item) ------------------------------------------------------ */
+
+.rds-progress-tracker__item {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--progress-tracker-gap);
+  min-width: 0;
+  margin: 0;
+  padding: var(--progress-tracker-item-padding);
+  border: 0;
+  border-radius: var(--progress-tracker-item-radius);
+  background: var(--_bg, transparent);
+  color: var(--_fg);
+  font-family: var(--font-body), system-ui, sans-serif;
+  text-align: start;
+  text-decoration: none;
+
+  --_fg: var(--progress-tracker-label-fg);
+  --_bar: var(--progress-tracker-unvisited-bar);
+  --_weight: var(--paragraph-regular-weight);
+}
+
+/* Links and buttons show they can be clicked */
+:is(a, button).rds-progress-tracker__item:not(:disabled) {
+  cursor: pointer;
+}
+
+/* Where the step is in the flow (Figma: item) */
+.rds-progress-tracker__item[data-item='visited'] {
+  --_bar: var(--progress-tracker-visited-bar);
+}
+
+/* The current step also gets a heavier label, so it doesn't rely on colour alone */
+.rds-progress-tracker__item[data-item='current'] {
+  --_bar: var(--progress-tracker-current-bar);
+  --_weight: var(--paragraph-medium-weight);
+}
+
+.rds-progress-tracker__item[data-item='unvisited'] {
+  --_fg: var(--progress-tracker-label-fg-unvisited);
+}
+
+.rds-progress-tracker__item[data-item='disabled'] {
+  --_fg: var(--progress-tracker-label-fg-disabled);
+  --_bar: var(--progress-tracker-disabled-bar);
+}
+
+/* Hover and press - only on steps you can click, or when forced for a preview */
+:is(a, button).rds-progress-tracker__item:not(:disabled):hover,
+.rds-progress-tracker__item[data-state='hover'] {
+  --_bg: var(--progress-tracker-bg-hover);
+}
+
+:is(a, button).rds-progress-tracker__item:not(:disabled):active,
+.rds-progress-tracker__item[data-state='press'] {
+  --_bg: var(--progress-tracker-bg-press);
+}
+
+/* Keyboard focus: the ring sits on the step's edge, like the Figma Focus Ring instance */
+.rds-progress-tracker__item:focus-visible,
+.rds-progress-tracker__item[data-state='focused'] {
+  outline: var(--ring-2) solid var(--progress-tracker-focus-ring);
+  outline-offset: calc(var(--ring-2) * -1);
+}
+
+/* ---- Label and bar --------------------------------------------------------------------------- */
+
+.rds-progress-tracker__label {
+  overflow: hidden;
+  font-size: var(--progress-tracker-label-font-size);
+  line-height: var(--progress-tracker-label-line-height);
+  font-weight: var(--_weight); /* Figma: Inter Regular / Medium (not bound to a token) */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* "Completed:", "Current:" ... - hidden visually, read by screen readers */
+.rds-progress-tracker__status {
+  position: absolute;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.rds-progress-tracker__bar {
+  display: block;
+  height: var(--progress-tracker-bar-height);
+  background: var(--_bar);
+  /* Square on the left so consecutive bars read as one track ... */
+  border-start-end-radius: var(--progress-tracker-bar-radius);
+  border-end-end-radius: var(--progress-tracker-bar-radius);
+}
+
+/* ... except the first step, which is the start of the track */
+.rds-progress-tracker__item[data-start] .rds-progress-tracker__bar {
+  border-radius: var(--progress-tracker-bar-radius);
+}

@@ -1,0 +1,96 @@
+/*
+ * Pagination styles. Uses only --pagination-* component tokens and semantic tokens.
+ * Page, navigator and ellipsis share one base (.rds-pagination__item); each state fills in
+ * the local "--_" variables.
+ */
+
+.rds-pagination__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pagination-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---- Shared item base ----------------------------------------------------------------------- */
+
+.rds-pagination__item {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pagination-gap);
+  min-width: var(--pagination-item-size);
+  height: var(--pagination-item-size);
+  margin: 0;
+  padding: 0;
+  /* A transparent border on every item, so the Selected outline doesn't shift anything */
+  border: var(--pagination-border-width) solid var(--_border);
+  border-radius: var(--pagination-item-radius);
+  background: var(--_bg);
+  color: var(--_fg);
+  font-family: inherit;
+  font-size: var(--pagination-font-size);
+  line-height: var(--pagination-line-height);
+  font-weight: var(--_weight);
+
+  --_bg: var(--pagination-navigator-bg);
+  --_border: var(--pagination-navigator-border);
+  --_fg: var(--pagination-item-fg);
+  --_weight: var(--paragraph-regular-weight); /* Figma: Inter Regular */
+  /* Chevrons follow the text colour, as in Figma */
+  --icon-size: var(--pagination-icon-size);
+  --icon-fg: currentColor;
+}
+
+button.rds-pagination__item {
+  cursor: pointer;
+}
+
+/* Navigators with a label get side padding; icon-only ones stay square */
+.rds-pagination__navigator {
+  padding-inline: var(--pagination-item-padding-x);
+}
+
+/* ---- States (Figma: State) -------------------------------------------------------------------- */
+
+button.rds-pagination__item:is(:hover, [data-state='Hover']):not(:disabled) {
+  --_bg: var(--pagination-item-bg-hover);
+  --_fg: var(--pagination-item-fg-hover);
+}
+
+button.rds-pagination__item:is(:active, [data-state='Press']):not(:disabled) {
+  --_bg: var(--pagination-item-bg-press);
+  --_fg: var(--pagination-item-fg-press);
+}
+
+/* Focus: in Figma the ring sits INSIDE the item (a 2px border), not outside it.
+   A negative outline offset draws it on the inside the same way. Keyboard focus only. */
+button.rds-pagination__item:focus-visible,
+button.rds-pagination__item[data-state='Focus'] {
+  outline: var(--pagination-ring-width) solid var(--pagination-focus-ring);
+  outline-offset: calc(var(--pagination-ring-width) * -1);
+}
+
+/* Selected (current page): a primary outline and primary Medium-weight text - not a fill,
+   so it doesn't rely on colour alone. */
+.rds-pagination__page[data-state='Selected'] {
+  --_bg: var(--pagination-item-bg-active);
+  --_border: var(--pagination-item-border-active);
+  --_fg: var(--pagination-item-fg-active);
+  --_weight: var(--pagination-font-weight);
+}
+
+/* The current page keeps its Selected look while hovered or pressed.
+   ("button" in front makes this rule strong enough to beat the general hover rule above.) */
+button.rds-pagination__page[data-state='Selected']:is(:hover, :active) {
+  --_bg: var(--pagination-item-bg-active);
+  --_fg: var(--pagination-item-fg-active);
+}
+
+button.rds-pagination__item:disabled {
+  --_fg: var(--pagination-item-fg-disabled);
+  cursor: not-allowed;
+}

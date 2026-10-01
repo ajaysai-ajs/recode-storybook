@@ -1,0 +1,352 @@
+/*
+ * Date Picker + Calendar styles. Uses only --date-picker-* and --popover-* component tokens
+ * and semantic tokens. Built the same way as Input (the Figma description says the Date Picker
+ * follows the Input v2 API).
+ */
+
+/* ==== Field ==================================================================================== */
+
+.rds-date-picker {
+  width: 100%; /* fills its container; Figma shows it at a fixed 240px */
+}
+
+.rds-date-picker__field {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--_gap);
+  width: 100%;
+  height: var(--_height);
+  padding-inline: var(--_padding-x);
+  border: var(--date-picker-border-width) solid var(--_border);
+  border-radius: var(--_radius);
+  background: var(--_bg);
+  color: var(--_fg);
+}
+
+.rds-date-picker__control {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  outline: none; /* the focus ring is drawn on the field instead */
+  color: inherit;
+  caret-color: var(--date-picker-caret);
+  font-family: inherit;
+  font-size: var(--_font-size);
+  line-height: var(--_line-height);
+  font-weight: var(--paragraph-regular-weight); /* Figma: Inter Regular */
+}
+
+.rds-date-picker__control::placeholder {
+  color: var(--date-picker-placeholder);
+  opacity: 1;
+}
+
+/* ---- Sizes (Figma: Size) ---- */
+
+.rds-date-picker__field[data-size='sm'] {
+  --_height: var(--date-picker-sm-height);
+  --_padding-x: var(--date-picker-sm-padding-x);
+  --_gap: var(--date-picker-sm-gap);
+  --_font-size: var(--date-picker-sm-font-size);
+  --_line-height: var(--date-picker-sm-line-height);
+  --_radius: var(--date-picker-sm-radius);
+  --_icon-size: var(--date-picker-sm-icon);
+}
+
+.rds-date-picker__field[data-size='md'] {
+  --_height: var(--date-picker-md-height);
+  --_padding-x: var(--date-picker-md-padding-x);
+  --_gap: var(--date-picker-md-gap);
+  --_font-size: var(--date-picker-md-font-size);
+  --_line-height: var(--date-picker-md-line-height);
+  --_radius: var(--date-picker-md-radius);
+  --_icon-size: var(--date-picker-md-icon);
+}
+
+.rds-date-picker__field[data-size='lg'] {
+  --_height: var(--date-picker-lg-height);
+  --_padding-x: var(--date-picker-lg-padding-x);
+  --_gap: var(--date-picker-lg-gap);
+  --_font-size: var(--date-picker-lg-font-size);
+  --_line-height: var(--date-picker-lg-line-height);
+  --_radius: var(--date-picker-lg-radius);
+  --_icon-size: var(--date-picker-lg-icon);
+}
+
+/* ---- Appearances (Figma: Appearance) ---- */
+
+.rds-date-picker__field[data-appearance='Default'] {
+  --_bg: var(--date-picker-bg);
+  --_bg-hover: var(--date-picker-bg-hover);
+  --_border: var(--date-picker-border);
+  --_border-hover: var(--date-picker-border-hover);
+  --_fg: var(--date-picker-fg);
+}
+
+.rds-date-picker__field[data-appearance='Subtle'] {
+  --_bg: var(--date-picker-subtle-bg);
+  --_bg-hover: var(--date-picker-subtle-bg-hover);
+  --_border: var(--date-picker-subtle-border);
+  --_border-hover: var(--date-picker-subtle-border);
+  --_fg: var(--date-picker-fg);
+}
+
+/* Ghost: no fill or stroke at rest or on hover (as the Figma variants show) */
+.rds-date-picker__field[data-appearance='Ghost'] {
+  --_bg: var(--date-picker-ghost-bg);
+  --_bg-hover: var(--date-picker-ghost-bg);
+  --_border: var(--date-picker-ghost-border);
+  --_border-hover: var(--date-picker-ghost-border);
+  --_fg: var(--date-picker-fg);
+}
+
+/* ---- States (Figma: State) ---- */
+
+.rds-date-picker__field:is(:hover, [data-state='Hover']):not([data-state='Disabled']) {
+  background: var(--_bg-hover);
+  border-color: var(--_border-hover);
+}
+
+/* Focus, Typing and Open: the border takes the ring colour (on every appearance, Ghost too)
+   and a 2px ring appears 1px outside. It stays while focus is inside the open calendar. */
+.rds-date-picker:focus-within .rds-date-picker__field,
+.rds-date-picker__field:is([data-state='Focus'], [data-state='Typing'], [data-state='Open']) {
+  background: var(--_bg);
+  border-color: var(--date-picker-ring);
+  outline: var(--date-picker-ring-width) solid var(--_ring, var(--date-picker-ring));
+  outline-offset: var(--date-picker-border-width);
+}
+
+/* Error: a 2px red border (Figma thickens it to `ring width`, unlike Input's 1px). The extra
+   1px is drawn inside with an inset shadow, so the text doesn't shift. Ghost turns the text red. */
+.rds-date-picker__field[data-invalid]:not([data-appearance='Ghost']) {
+  --_border: var(--date-picker-border-error);
+  --_border-hover: var(--date-picker-border-error);
+  box-shadow: inset 0 0 0 calc(var(--date-picker-ring-width) - var(--date-picker-border-width)) var(--date-picker-border-error);
+}
+
+.rds-date-picker__field[data-invalid] {
+  --_ring: var(--date-picker-ring-error);
+}
+
+.rds-date-picker:focus-within .rds-date-picker__field[data-invalid] {
+  border-color: var(--date-picker-border-error);
+}
+
+.rds-date-picker__field[data-invalid][data-appearance='Ghost'] {
+  --_fg: var(--date-picker-fg-error);
+}
+
+/* Disabled */
+.rds-date-picker__field[data-state='Disabled'] {
+  --_fg: var(--date-picker-fg-disabled);
+}
+
+.rds-date-picker__field[data-state='Disabled']:not([data-appearance='Ghost']) {
+  --_bg: var(--date-picker-bg-disabled);
+}
+
+.rds-date-picker__field[data-state='Disabled'] .rds-date-picker__control {
+  cursor: not-allowed;
+}
+
+.rds-date-picker__field[data-state='Disabled'] .rds-date-picker__control::placeholder {
+  color: var(--date-picker-fg-disabled);
+}
+
+/* ---- Icons ---- */
+
+.rds-date-picker__icon,
+.rds-date-picker__button {
+  display: inline-flex;
+  flex: none;
+  width: var(--_icon-size);
+  height: var(--_icon-size);
+  color: var(--date-picker-icon-fg);
+  --icon-size: var(--_icon-size);
+  --icon-fg: currentColor;
+}
+
+.rds-date-picker__icon svg,
+.rds-date-picker__button svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+/* The calendar button: just the glyph, no box of its own */
+.rds-date-picker__button {
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-xs);
+  background: transparent;
+  cursor: pointer;
+}
+
+.rds-date-picker__button:hover:not(:disabled) {
+  color: var(--date-picker-fg);
+}
+
+.rds-date-picker__button:focus-visible {
+  outline: var(--date-picker-ring-width) solid var(--date-picker-ring);
+  outline-offset: var(--date-picker-border-width);
+}
+
+.rds-date-picker__button:disabled {
+  color: var(--date-picker-fg-disabled);
+  cursor: not-allowed;
+}
+
+/* ==== Popover (the layer the calendar opens in) ================================================= */
+
+/* The browser shows popovers in the "top layer", above everything else on the page.
+   Its default centring is removed so the script can place it under the field. */
+.rds-date-picker__popover {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  margin-block-start: var(--popover-offset);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+/* ==== Calendar ================================================================================= */
+
+.rds-calendar {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  padding: var(--date-picker-calendar-padding);
+  border: var(--date-picker-border-width) solid var(--date-picker-calendar-border);
+  border-radius: var(--date-picker-calendar-radius);
+  background: var(--date-picker-calendar-bg);
+  color: var(--date-picker-day-fg);
+  font-family: inherit;
+}
+
+.rds-calendar__heading {
+  display: flex;
+  align-items: center;
+  padding-block-end: var(--padding-sm);
+}
+
+.rds-calendar__month {
+  flex: 1;
+  margin: 0;
+  text-align: center;
+  font-size: var(--date-picker-heading-font-size);
+  line-height: var(--date-picker-line-height);
+  font-weight: var(--paragraph-medium-weight); /* Figma: Inter Medium */
+}
+
+/* Previous / next month */
+.rds-calendar__nav {
+  display: inline-flex;
+  width: var(--date-picker-icon-size);
+  height: var(--date-picker-icon-size);
+  padding: 0;
+  border: 0;
+  border-radius: var(--date-picker-day-radius);
+  background: transparent;
+  color: var(--date-picker-day-fg);
+  cursor: pointer;
+}
+
+.rds-calendar__nav svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5; /* Figma stroke; no token for icon stroke weight */
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.rds-calendar__nav:hover {
+  background: var(--date-picker-day-bg-hover);
+}
+
+.rds-calendar__grid {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.rds-calendar__grid td {
+  padding: 0;
+}
+
+/* Weekday names. Figma draws this row 32px tall with no token, so it uses the day size. */
+.rds-calendar__weekday {
+  width: var(--date-picker-day-size);
+  height: var(--date-picker-day-size);
+  padding: 0;
+  color: var(--date-picker-weekday-fg);
+  font-size: var(--date-picker-weekday-font-size);
+  line-height: var(--date-picker-line-height);
+  font-weight: var(--paragraph-medium-weight);
+}
+
+/* ---- Calendar Day (Figma: RDS Calendar Day) ---- */
+
+.rds-calendar__day {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--date-picker-day-size);
+  height: var(--date-picker-day-size);
+  margin: 0;
+  padding: 0;
+  border: var(--date-picker-border-width) solid transparent;
+  border-radius: var(--date-picker-day-radius);
+  background: transparent;
+  color: var(--date-picker-day-fg);
+  font-family: inherit;
+  font-size: var(--date-picker-font-size);
+  line-height: var(--date-picker-line-height);
+  font-weight: var(--paragraph-regular-weight);
+}
+
+button.rds-calendar__day {
+  cursor: pointer;
+}
+
+.rds-calendar__day:is(button:hover, [data-state='hover']):not([data-state='selected']) {
+  background: var(--date-picker-day-bg-hover);
+}
+
+/* Days from the previous / next month */
+.rds-calendar__day[data-state='muted'] {
+  color: var(--date-picker-day-fg-muted);
+}
+
+/* Today: outlined, Medium weight */
+.rds-calendar__day[data-state='today'] {
+  border-color: var(--date-picker-today-border);
+  font-weight: var(--paragraph-medium-weight);
+}
+
+/* The chosen day: filled, Medium weight */
+.rds-calendar__day[data-state='selected'] {
+  background: var(--date-picker-day-bg-selected);
+  color: var(--date-picker-day-fg-selected);
+  font-weight: var(--paragraph-medium-weight);
+}
+
+/* Part of a date range (not used by the single-date picker yet) */
+.rds-calendar__day[data-state='range'] {
+  background: var(--date-picker-day-bg-range);
+}
+
+/* Keyboard focus. Figma has no focus state for days, so this uses the date picker ring. */
+.rds-calendar__day:focus-visible,
+.rds-calendar__nav:focus-visible {
+  outline: var(--date-picker-ring-width) solid var(--date-picker-ring);
+  outline-offset: var(--date-picker-border-width);
+}

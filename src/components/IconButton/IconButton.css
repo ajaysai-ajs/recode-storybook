@@ -1,0 +1,35 @@
+/*
+ * Icon Button styles. Colours, states, focus ring and loading all come from Button.css
+ * (the same button/* tokens, as in Figma). This file only makes it square, using the
+ * icon-button/size/* tokens. ".rds-button.rds-icon-button" is stronger than Button's own
+ * size rules, so these win.
+ */
+
+.rds-button.rds-icon-button {
+  width: var(--_height); /* square: as wide as it is tall */
+  padding-inline: 0;
+}
+
+.rds-button.rds-icon-button[data-size='sm'] {
+  --_height: var(--icon-button-size-sm-size);
+  --_icon-size: var(--icon-button-size-sm-icon);
+  --_radius: var(--icon-button-size-sm-radius);
+}
+
+.rds-button.rds-icon-button[data-size='md'] {
+  --_height: var(--icon-button-size-md-size);
+  --_icon-size: var(--icon-button-size-md-icon);
+  --_radius: var(--icon-button-size-md-radius);
+}
+
+.rds-button.rds-icon-button[data-size='lg'] {
+  --_height: var(--icon-button-size-lg-size);
+  --_icon-size: var(--icon-button-size-lg-icon);
+  --_radius: var(--icon-button-size-lg-radius);
+}
+
+/* The icon (e.g. an <Icon>) takes the slot's size and the button's text colour */
+.rds-icon-button .rds-button__icon {
+  --icon-size: var(--_icon-size);
+  --icon-fg: currentColor;
+}

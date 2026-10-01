@@ -1,0 +1,294 @@
+/*
+ * File picker and File card styles. Uses only --file-picker-* component tokens (both parts
+ * share them in Figma) and semantic tokens.
+ */
+
+/* ==== File picker ============================================================================ */
+
+.rds-file-picker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--file-picker-field-gap);
+  font-family: var(--font-body), system-ui, sans-serif;
+  color: var(--file-picker-fg);
+}
+
+.rds-file-picker__label {
+  font-size: var(--file-picker-font-size);
+  line-height: var(--file-picker-line-height);
+  font-weight: var(--paragraph-medium-weight); /* Figma: Inter Medium (not bound to a token) */
+}
+
+/* The browser's file input is never shown; our button or drop area opens it */
+.rds-file-picker__input {
+  display: none;
+}
+
+/* Hidden visually, still read by screen readers */
+.rds-file-picker__label[data-hidden],
+.rds-file-picker__hidden {
+  position: absolute;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---- The control (Field row or Dropzone) --------------------------------------------------- */
+
+.rds-file-picker__control {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  /* Focus swaps the 1px border for a thicker ring, and the padding shrinks by the same
+     amount, so nothing moves (as Figma describes) */
+  padding: calc(var(--_padding) - var(--_border-width) + var(--file-picker-border-width));
+  border: var(--_border-width) var(--_border-style, solid) var(--_border);
+  border-radius: var(--file-picker-dropzone-radius);
+  background: var(--_bg);
+  color: inherit;
+  font: inherit;
+
+  --_bg: var(--file-picker-dropzone-bg);
+  --_border: var(--file-picker-dropzone-border);
+  --_border-width: var(--file-picker-border-width);
+}
+
+/* Field: a compact row with a button and a line of text; only as wide as its content */
+.rds-file-picker[data-type='Field'] .rds-file-picker__control {
+  align-self: flex-start;
+  gap: var(--file-picker-row-gap);
+
+  --_padding: var(--file-picker-row-padding-y); /* Figma binds all four sides to row/padding y */
+}
+
+/* Dropzone: a big dashed area; the whole thing is a button */
+.rds-file-picker[data-type='Dropzone'] .rds-file-picker__control {
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--file-picker-dropzone-gap);
+  width: 100%;
+  min-width: min(100%, var(--file-picker-dropzone-min-width));
+  cursor: pointer;
+
+  --_padding: var(--file-picker-dropzone-padding);
+  --_border-style: dashed;
+}
+
+/* ---- States ---------------------------------------------------------------------------------- */
+
+/* Hover (the real one, or forced for a preview) */
+.rds-file-picker:is([data-state='Default'], [data-state='Error']) .rds-file-picker__control:hover,
+.rds-file-picker[data-state='Hover'] .rds-file-picker__control {
+  --_bg: var(--file-picker-dropzone-bg-hover);
+}
+
+/* Keyboard focus. In a Field the ring goes round the whole row, not just the button. */
+.rds-file-picker__control:is(:focus-visible, :has(:focus-visible)),
+.rds-file-picker[data-state='Focus'] .rds-file-picker__control {
+  outline: none;
+
+  --_border: var(--file-picker-ring);
+  --_border-width: var(--file-picker-ring-width);
+}
+
+.rds-file-picker__control .rds-button:focus-visible {
+  outline: none; /* the row's ring replaces the button's own */
+}
+
+/* Files are being dragged over it */
+.rds-file-picker[data-state='Dragover'] .rds-file-picker__control {
+  --_bg: var(--file-picker-dropzone-bg-dragover);
+  --_border: var(--file-picker-dropzone-border-dragover);
+}
+
+.rds-file-picker[data-state='Error'] .rds-file-picker__control:not(:focus-visible, :has(:focus-visible)) {
+  --_border: var(--file-picker-dropzone-border-error);
+}
+
+.rds-file-picker[data-state='Disabled'] .rds-file-picker__control {
+  cursor: not-allowed;
+
+  --_bg: var(--file-picker-dropzone-bg-disabled);
+  --_border: var(--file-picker-dropzone-border-disabled);
+}
+
+/* ---- Content --------------------------------------------------------------------------------- */
+
+.rds-file-picker__field-text {
+  color: var(--file-picker-fg-muted);
+  font-size: var(--file-picker-font-size);
+  line-height: var(--file-picker-line-height);
+}
+
+.rds-file-picker__icon {
+  width: var(--file-picker-dropzone-icon-size);
+  height: var(--file-picker-dropzone-icon-size);
+  fill: var(--file-picker-fg-muted);
+}
+
+.rds-file-picker[data-state='Dragover'] .rds-file-picker__icon {
+  fill: var(--file-picker-fg-accent);
+}
+
+.rds-file-picker__prompt {
+  font-size: var(--file-picker-font-size);
+  line-height: var(--file-picker-line-height);
+  font-weight: var(--paragraph-medium-weight); /* Figma: Inter Medium */
+  text-align: center;
+}
+
+/* The Dropzone prompt takes the state colour too (the Field text doesn't, as in Figma) */
+.rds-file-picker[data-state='Dragover'] .rds-file-picker__prompt {
+  color: var(--file-picker-fg-accent);
+}
+
+.rds-file-picker[data-state='Error'] .rds-file-picker__prompt {
+  color: var(--file-picker-fg-error);
+}
+
+.rds-file-picker__description {
+  margin: 0;
+  color: var(--file-picker-fg-muted);
+  font-size: var(--file-picker-hint-font-size);
+  line-height: var(--file-picker-hint-line-height);
+}
+
+.rds-file-picker[data-state='Error'] .rds-file-picker__description {
+  color: var(--file-picker-fg-error);
+}
+
+/* Disabled: every text and the icon use the disabled colour */
+.rds-file-picker[data-state='Disabled'] :is(.rds-file-picker__label, .rds-file-picker__field-text, .rds-file-picker__prompt, .rds-file-picker__description) {
+  color: var(--file-picker-fg-disabled);
+}
+
+.rds-file-picker[data-state='Disabled'] .rds-file-picker__icon {
+  fill: var(--file-picker-fg-disabled);
+}
+
+/* ==== File card ============================================================================== */
+
+.rds-file-card {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--file-picker-row-gap);
+  width: 100%;
+  padding: var(--file-picker-row-padding-y) var(--file-picker-row-padding-x);
+  border: var(--file-picker-border-width) solid var(--_border);
+  border-radius: var(--file-picker-row-radius);
+  background: var(--_bg);
+  font-family: var(--font-body), system-ui, sans-serif;
+
+  --_bg: var(--file-picker-row-bg);
+  --_border: var(--file-picker-row-border);
+  --_accent: var(--file-picker-fg); /* the name's colour */
+  --_icon: var(--file-picker-fg-muted);
+}
+
+/* Error: tinted surface, red icon and name */
+.rds-file-card[data-state='Error'] {
+  --_bg: var(--file-picker-row-bg-error);
+  --_border: var(--file-picker-row-border-error);
+  --_accent: var(--file-picker-fg-error);
+  --_icon: var(--file-picker-fg-error);
+}
+
+.rds-file-card__type-icon {
+  flex: none;
+  width: var(--file-picker-row-icon-size);
+  height: var(--file-picker-row-icon-size);
+  fill: var(--_icon);
+}
+
+.rds-file-card__stack {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--file-picker-list-gap);
+  min-width: 0; /* lets a long file name shrink and get the "…" */
+}
+
+.rds-file-card__name {
+  overflow: hidden;
+  color: var(--_accent);
+  font-size: var(--file-picker-font-size);
+  line-height: var(--file-picker-line-height);
+  font-weight: var(--paragraph-medium-weight); /* Figma: Inter Medium */
+  text-overflow: ellipsis;
+  white-space: nowrap; /* one line, as Figma describes */
+}
+
+.rds-file-card__meta,
+.rds-file-card__error {
+  font-size: var(--file-picker-row-meta-font-size);
+  line-height: var(--file-picker-row-meta-line-height);
+}
+
+.rds-file-card__meta {
+  color: var(--file-picker-row-action-fg); /* Figma binds the size text to row/action fg */
+}
+
+.rds-file-card__error {
+  color: var(--file-picker-fg-error);
+}
+
+/* ---- Upload progress ----------------------------------------------------------------------- */
+
+.rds-file-card__progress {
+  height: var(--file-picker-row-progress-height);
+  overflow: hidden;
+  border-radius: var(--file-picker-row-progress-radius);
+  background: var(--file-picker-row-progress-track);
+}
+
+.rds-file-card__indicator {
+  height: 100%;
+  border-radius: var(--file-picker-row-progress-radius);
+  background: var(--file-picker-row-progress-indicator);
+  /* No animation: there are no motion (duration) tokens yet */
+}
+
+/* ---- Actions (download, delete) ------------------------------------------------------------ */
+
+.rds-file-card__actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--file-picker-list-gap);
+}
+
+.rds-file-card__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--file-picker-row-action-size);
+  height: var(--file-picker-row-action-size);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--file-picker-row-action-radius);
+  background: transparent;
+  color: var(--file-picker-row-action-fg);
+  cursor: pointer;
+}
+
+/* On a failed card the actions turn red too (as in Figma) */
+.rds-file-card[data-state='Error'] .rds-file-card__action {
+  color: var(--file-picker-fg-error);
+}
+
+.rds-file-card__action:hover {
+  background: var(--file-picker-row-action-bg-hover);
+}
+
+.rds-file-card__action:focus-visible {
+  outline: var(--file-picker-ring-width) solid var(--file-picker-ring);
+  outline-offset: var(--ring-1);
+}
+
+.rds-file-card__action svg {
+  width: var(--file-picker-row-icon-size);
+  height: var(--file-picker-row-icon-size);
+  fill: currentColor;
+}

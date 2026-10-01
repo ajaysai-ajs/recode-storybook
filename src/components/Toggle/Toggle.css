@@ -1,0 +1,93 @@
+/*
+ * Toggle styles. Uses only --switch-* component tokens (what the Figma Toggle is bound to)
+ * and semantic tokens. The native checkbox is restyled into the track with `appearance: none`,
+ * and the thumb is drawn with ::before.
+ */
+
+.rds-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  cursor: pointer;
+}
+
+/* The track */
+.rds-toggle__control {
+  position: relative;
+  box-sizing: border-box;
+  flex: none;
+  width: var(--switch-width);
+  height: var(--switch-height);
+  margin: 0;
+  appearance: none; /* removes the browser's own checkbox drawing */
+  border-radius: var(--switch-radius);
+  background: var(--_track);
+  cursor: inherit;
+
+  --_track: var(--switch-track);
+  --_track-hover: var(--switch-track-hover);
+  /* How far the thumb travels: the track width minus the thumb and the padding on both sides */
+  --_travel: calc(var(--switch-width) - var(--switch-thumb-size) - 2 * var(--switch-padding));
+}
+
+/* The thumb, sitting `switch/padding` in from the edge */
+.rds-toggle__control::before {
+  content: '';
+  position: absolute;
+  top: var(--switch-padding);
+  left: var(--switch-padding);
+  width: var(--switch-thumb-size);
+  height: var(--switch-thumb-size);
+  border-radius: 50%; /* a circle */
+  background: var(--switch-thumb);
+}
+
+/* ---- On (Figma: State=On) --------------------------------------------------------------------- */
+
+.rds-toggle__control:checked {
+  --_track: var(--switch-track-checked);
+  --_track-hover: var(--switch-track-checked-hover);
+}
+
+.rds-toggle__control:checked::before {
+  translate: var(--_travel) 0;
+}
+
+/* ---- Interaction (Figma: Interaction) -------------------------------------------------------- */
+
+:is(.rds-toggle:hover, .rds-toggle[data-interaction='Hover']) .rds-toggle__control:not(:disabled) {
+  background: var(--_track-hover);
+}
+
+/* Focus: a ring `switch/ring offset` away from the track. Figma's ring width (4px) includes the
+   offset, so the visible ring is width - offset. Only shown for keyboard focus. */
+.rds-toggle__control:focus-visible,
+.rds-toggle[data-interaction='Focus'] .rds-toggle__control {
+  outline: calc(var(--switch-ring-width) - var(--switch-ring-offset)) solid var(--switch-ring);
+  outline-offset: var(--switch-ring-offset);
+}
+
+/* ---- Disabled (Figma: State=Disabled) --------------------------------------------------------- */
+
+.rds-toggle:has(.rds-toggle__control:disabled) {
+  cursor: not-allowed;
+}
+
+.rds-toggle__control:disabled {
+  --_track: var(--switch-track-disabled);
+}
+
+/* ---- Label (not in Figma; matches the Checkbox and Radio labels) ------------------------------ */
+
+.rds-toggle__label {
+  color: var(--foreground);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: var(--paragraph-small-font-size);
+  line-height: var(--paragraph-small-line-height);
+  letter-spacing: var(--paragraph-small-letter-spacing);
+  font-weight: var(--paragraph-regular-weight);
+}
+
+.rds-toggle:has(.rds-toggle__control:disabled) .rds-toggle__label {
+  color: var(--state-disabled-foreground);
+}

@@ -1,0 +1,216 @@
+/* Alert Dialog styles. Uses only --dialog-* component tokens and semantic tokens. */
+
+/* While a modal dialog is open, the page behind it doesn't scroll */
+html:has(.rds-alert-dialog:modal) {
+  overflow: hidden;
+}
+
+/* ---- Surface (the <dialog> itself) ---------------------------------------------------------- */
+
+.rds-alert-dialog {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dialog-gap);
+  width: var(--_width);
+  /* Never wider or taller than the window, keeping the blanket padding around it */
+  max-width: calc(100% - 2 * var(--dialog-blanket-padding));
+  max-height: calc(100% - 2 * var(--dialog-blanket-padding));
+  margin: auto;
+  padding: 0;
+  border: var(--dialog-border-width) solid var(--dialog-border);
+  border-radius: var(--dialog-radius);
+  background: var(--dialog-bg);
+  color: var(--dialog-fg);
+  overflow: hidden; /* a long body scrolls instead (below) */
+}
+
+/* A closed dialog stays hidden (display: flex above would otherwise show it) */
+.rds-alert-dialog:not([open]) {
+  display: none;
+}
+
+/* The dimmed layer behind a modal dialog */
+.rds-alert-dialog::backdrop {
+  background: var(--dialog-overlay);
+}
+
+.rds-alert-dialog[data-size='small'] {
+  --_width: var(--dialog-width-sm);
+}
+.rds-alert-dialog[data-size='medium'] {
+  --_width: var(--dialog-width-md);
+}
+.rds-alert-dialog[data-size='large'] {
+  --_width: var(--dialog-width-lg);
+}
+.rds-alert-dialog[data-size='x-large'] {
+  --_width: var(--dialog-width-xl);
+}
+
+/* full-screen: fills the window, no blanket padding, no rounded corners (as in Figma) */
+.rds-alert-dialog[data-size='full-screen'] {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 0;
+}
+.rds-alert-dialog[data-size='full-screen']:modal {
+  height: 100%;
+  max-height: 100%;
+}
+
+/* ---- Dialog header -------------------------------------------------------------------------- */
+
+.rds-alert-dialog__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--dialog-header-gap);
+  padding: var(--dialog-padding) var(--dialog-padding) 0;
+}
+
+.rds-alert-dialog__title-row {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--dialog-title-gap);
+  min-width: 0;
+}
+
+.rds-alert-dialog__icon {
+  flex: none;
+  width: var(--dialog-icon-size);
+  height: var(--dialog-icon-size);
+}
+
+.rds-alert-dialog[data-appearance='warning'] .rds-alert-dialog__icon {
+  fill: var(--dialog-icon-warning);
+}
+
+.rds-alert-dialog[data-appearance='danger'] .rds-alert-dialog__icon {
+  fill: var(--dialog-icon-danger);
+}
+
+/* Figma: the Heading 4 text style (on the body font family, as bound in Figma) */
+.rds-alert-dialog__title {
+  margin: 0;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: var(--heading-4-font-size);
+  line-height: var(--heading-4-line-height);
+  letter-spacing: var(--heading-4-letter-spacing);
+  font-weight: var(--heading-4-weight);
+  overflow-wrap: anywhere;
+}
+
+/* "Warning:" / "Danger:" - hidden visually, read by screen readers */
+.rds-alert-dialog__status {
+  position: absolute;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---- Dialog close --------------------------------------------------------------------------- */
+
+.rds-alert-dialog__close {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--dialog-close-size);
+  height: var(--dialog-close-size);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--dialog-close-radius);
+  background: var(--_bg, transparent);
+  color: var(--dialog-close-fg);
+  cursor: pointer;
+}
+
+.rds-alert-dialog__close svg {
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
+  fill: currentColor;
+}
+
+.rds-alert-dialog__close:is(:hover, [data-state='hover']) {
+  --_bg: var(--dialog-close-bg-hover);
+}
+
+.rds-alert-dialog__close:is(:active, [data-state='press']) {
+  --_bg: var(--dialog-close-bg-press);
+}
+
+/* Keyboard focus: the RDS focus ring */
+.rds-alert-dialog__close:is(:focus-visible, [data-state='focus']) {
+  outline: var(--ring-2) solid var(--ring);
+  outline-offset: var(--ring-1);
+}
+
+/* ---- Dialog body ---------------------------------------------------------------------------- */
+
+.rds-alert-dialog__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dialog-body-gap);
+  min-height: 0; /* lets it shrink and scroll when the dialog reaches the window height */
+  padding: 0 var(--dialog-padding);
+  overflow-y: auto;
+  color: var(--dialog-muted-fg);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: var(--paragraph-small-font-size);
+  line-height: var(--paragraph-small-line-height);
+  letter-spacing: var(--paragraph-small-letter-spacing);
+  font-weight: var(--paragraph-regular-weight);
+}
+
+.rds-alert-dialog__body > p {
+  flex: none;
+  margin: 0;
+}
+
+/* A scrolling body can get keyboard focus; show the ring inside its edges */
+.rds-alert-dialog__body:focus-visible {
+  outline: var(--ring-2) solid var(--ring);
+  outline-offset: calc(var(--ring-2) * -1);
+}
+
+/* Without a footer, keep space under the body (Figma leaves the text touching the edge) */
+.rds-alert-dialog__body:last-child {
+  padding-bottom: var(--dialog-padding);
+}
+
+/* ---- Dialog footer -------------------------------------------------------------------------- */
+
+.rds-alert-dialog__footer {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--dialog-action-gap);
+  padding: 0 var(--dialog-padding) var(--dialog-padding);
+}
+
+/* Without a body or footer, keep space under the header too */
+.rds-alert-dialog__header:last-child {
+  padding-bottom: var(--dialog-padding);
+}
+
+/* ---- Preview (isModal = false): the dialog on a dimmed panel, like the Figma frame ------------ */
+
+.rds-alert-dialog-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--dialog-blanket-padding);
+  background: var(--dialog-overlay);
+}
+
+.rds-alert-dialog-preview[data-size='full-screen'] {
+  padding: 0;
+}
+
+.rds-alert-dialog-preview > .rds-alert-dialog {
+  position: static; /* in the page flow instead of floating */
+  max-width: 100%;
+  max-height: none;
+}

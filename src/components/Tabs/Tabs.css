@@ -1,0 +1,93 @@
+/* Tabs styles. Uses only --tabs-* component tokens and semantic tokens. */
+
+/* ---- Tabs List ------------------------------------------------------------------------------- */
+
+.rds-tabs__list {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  overflow-x: auto; /* many tabs scroll sideways instead of breaking the layout */
+}
+
+/* The baseline under the row. It is ::before (drawn first) so the selected tab's underline,
+   drawn later, sits on top of it - as in Figma. */
+.rds-tabs__list::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: var(--tabs-border-width);
+  background: var(--tabs-border);
+}
+
+/* ---- Tabs Trigger ---------------------------------------------------------------------------- */
+
+.rds-tabs__trigger {
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: var(--tabs-gap);
+  height: var(--tabs-trigger-height);
+  margin: 0;
+  padding: 0 var(--tabs-trigger-padding-x);
+  border: 0;
+  background: var(--_bg);
+  color: var(--_fg);
+  font-family: inherit;
+  font-size: var(--tabs-font-size);
+  line-height: var(--tabs-line-height);
+  font-weight: var(--tabs-font-weight);
+  white-space: nowrap;
+  cursor: pointer;
+
+  --_bg: var(--tabs-trigger-bg);
+  --_fg: var(--tabs-trigger-fg);
+}
+
+/* Hover and press fill the tab (Figma draws these for unselected tabs only, so a selected tab
+   keeps its look). */
+.rds-tabs__trigger:is(:hover, [data-state='Hover']):not(:disabled, [aria-selected='true']) {
+  --_bg: var(--tabs-trigger-bg-hover);
+  --_fg: var(--tabs-trigger-fg-hover);
+}
+
+.rds-tabs__trigger:is(:active, [data-state='Press']):not(:disabled, [aria-selected='true']) {
+  --_bg: var(--tabs-trigger-bg-press);
+  --_fg: var(--tabs-trigger-fg-hover); /* Figma uses the hover text colour when pressed */
+}
+
+/* Selected: darker text plus a blue underline, inset from both sides */
+.rds-tabs__trigger[aria-selected='true'] {
+  --_fg: var(--tabs-trigger-fg-active);
+}
+
+.rds-tabs__trigger[aria-selected='true']::after {
+  content: '';
+  position: absolute;
+  inset-inline: var(--tabs-indicator-inset);
+  bottom: 0;
+  height: var(--tabs-indicator-height);
+  background: var(--tabs-indicator);
+}
+
+/* Focus: in Figma the ring is drawn INSIDE the tab. Keyboard focus only. */
+.rds-tabs__trigger:focus-visible,
+.rds-tabs__trigger[data-state='Focus'] {
+  outline: var(--tabs-ring-width) solid var(--tabs-ring);
+  outline-offset: calc(var(--tabs-ring-width) * -1);
+}
+
+.rds-tabs__trigger:disabled {
+  --_fg: var(--tabs-trigger-fg-disabled);
+  cursor: not-allowed;
+}
+
+/* ---- Panel ------------------------------------------------------------------------------------ */
+
+.rds-tabs__panel {
+  padding-block: var(--spacing-md);
+  border-radius: var(--radius-xs); /* rounds the focus outline */
+}
